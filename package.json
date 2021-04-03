@@ -24,8 +24,6 @@
     "url": "https://github.com/selfage/element_factory/issues"
   },
   "homepage": "https://github.com/selfage/element_factory#readme",
-  "main": "./factory.js",
-  "types": "./factory.d.ts",
   "files": [
     "**/*.d.ts",
     "**/*.js",

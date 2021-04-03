@@ -1,0 +1,42 @@
+{
+  "name": "@selfage/element_factory",
+  "version": "0.0.1",
+  "description": "A factory to create HTML elements/tags with structured indents.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/selfage/element_factory.git"
+  },
+  "keywords": [
+    "Web",
+    "HTML",
+    "Element",
+    "Framework",
+    "Pattern",
+    "Structured",
+    "Indent",
+    "Indentation",
+    "SPA",
+    "TypeScript"
+  ],
+  "author": "Yuxuan Xie <teststaybaka@gmail.com> (http://www.yuxuanxie.com)",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/selfage/element_factory/issues"
+  },
+  "homepage": "https://github.com/selfage/element_factory#readme",
+  "main": "./factory.js",
+  "types": "./factory.d.ts",
+  "files": [
+    "**/*.d.ts",
+    "**/*.js",
+    "!**/*_test.*",
+    "!test_data/**/*"
+  ],
+  "devDependencies": {
+    "@selfage/tsconfig": "^1.0.4",
+    "typescript": "^4.2.3"
+  },
+  "dependencies": {
+    "@selfage/ref": "^1.0.1"
+  }
+}

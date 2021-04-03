@@ -1,10 +1,10 @@
 {
-  "name": "@selfage/element_factory",
+  "name": "@selfage/element",
   "version": "0.0.1",
-  "description": "A factory to create HTML elements/tags with structured indents.",
+  "description": "Create vanilla HTML elements/tags with structured indents.",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/selfage/element_factory.git"
+    "url": "git+https://github.com/selfage/element.git"
   },
   "keywords": [
     "Web",
@@ -21,9 +21,9 @@
   "author": "Yuxuan Xie <teststaybaka@gmail.com> (http://www.yuxuanxie.com)",
   "license": "GPL-3.0-or-later",
   "bugs": {
-    "url": "https://github.com/selfage/element_factory/issues"
+    "url": "https://github.com/selfage/element/issues"
   },
-  "homepage": "https://github.com/selfage/element_factory#readme",
+  "homepage": "https://github.com/selfage/element#readme",
   "files": [
     "**/*.d.ts",
     "**/*.js",

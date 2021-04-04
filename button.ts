@@ -3,12 +3,12 @@ import { E } from "./factory";
 import { Ref, assign } from "@selfage/ref";
 
 export interface CustomButton {
-  enable: (element: HTMLButtonElement) => void;
-  disable: (element: HTMLButtonElement) => void;
-  hover: (element: HTMLButtonElement) => void;
-  down: (element: HTMLButtonElement) => void;
-  up: (element: HTMLButtonElement) => void;
-  leave: (element: HTMLButtonElement) => void;
+  enable: (element: HTMLButtonElement) => Promise<void> | void;
+  disable: (element: HTMLButtonElement) => Promise<void> | void;
+  hover: (element: HTMLButtonElement) => Promise<void> | void;
+  down: (element: HTMLButtonElement) => Promise<void> | void;
+  up: (element: HTMLButtonElement) => Promise<void> | void;
+  leave: (element: HTMLButtonElement) => Promise<void> | void;
 }
 
 export class Button {

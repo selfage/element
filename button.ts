@@ -2,47 +2,34 @@ import EventEmitter = require("events");
 import { E } from "./factory";
 import { Ref, assign } from "@selfage/ref";
 
-export interface CustomButton {
-  enable: (element: HTMLButtonElement) => Promise<void> | void;
-  disable: (element: HTMLButtonElement) => Promise<void> | void;
-  hover: (element: HTMLButtonElement) => Promise<void> | void;
-  down: (element: HTMLButtonElement) => Promise<void> | void;
-  up: (element: HTMLButtonElement) => Promise<void> | void;
-  leave: (element: HTMLButtonElement) => Promise<void> | void;
+export enum ButtonEventType {
+  ENABLE = 1,
+  DISABLE = 2,
+  CLICK = 3,
+  HOVER = 4,
+  DOWN = 5,
+  UP = 6,
+  LEAVE = 7,
 }
 
 export class Button {
-  private static CLICK = "click";
-
   private eventEmitter = new EventEmitter();
   private displayStyle: string;
 
-  public constructor(
-    private customButton: CustomButton,
-    private element: HTMLButtonElement
-  ) {}
+  public constructor(public element: HTMLButtonElement) {}
 
-  public static create(
-    customButton: CustomButton,
-    attributeStr: string,
-    ...childNodes: Node[]
-  ): Button {
-    let element = E.button(attributeStr, ...childNodes);
-    let button = new Button(customButton, element);
+  public static create(attributeStr: string, ...childNodes: Node[]): Button {
+    let button = new Button(E.button(attributeStr, ...childNodes));
     button.init();
     return button;
   }
 
   public static createRef(
     ref: Ref<Button>,
-    customButton: CustomButton,
     attributeStr: string,
     ...childNodes: Node[]
   ): Button {
-    return assign(
-      ref,
-      Button.create(customButton, attributeStr, ...childNodes)
-    );
+    return assign(ref, Button.create(attributeStr, ...childNodes));
   }
 
   public init(): void {
@@ -51,29 +38,37 @@ export class Button {
     this.enable();
   }
 
-  public onClick(callback: () => Promise<void> | void): void {
-    this.eventEmitter.on(Button.CLICK, callback);
+  public on(
+    eventType: ButtonEventType,
+    callback: () => Promise<void> | void
+  ): void {
+    this.eventEmitter.on(ButtonEventType[eventType], callback);
   }
 
-  public offClick(callback: () => Promise<void> | void): void {
-    this.eventEmitter.off(Button.CLICK, callback);
+  public off(
+    eventType: ButtonEventType,
+    callback: () => Promise<void> | void
+  ): void {
+    this.eventEmitter.off(ButtonEventType[eventType], callback);
   }
 
   private enable(): void {
     this.element.style.cursor = "pointer";
-    this.customButton.enable(this.element);
-    this.element.onclick = this.click;
-    this.element.onmouseenter = this.hover;
-    this.element.onmousedown = this.down;
-    this.element.onmouseup = this.up;
-    this.element.onmouseleave = this.leave;
+    this.eventEmitter.emit(ButtonEventType[ButtonEventType.ENABLE]);
+    this.element.addEventListener("click", this.click);
+    this.element.addEventListener("mouseenter", this.hover);
+    this.element.addEventListener("mousedown", this.down);
+    this.element.addEventListener("mouseup", this.up);
+    this.element.addEventListener("mouseleave", this.leave);
   }
 
   private click = async (): Promise<void> => {
     this.disable();
     try {
       await Promise.all(
-        this.eventEmitter.listeners(Button.CLICK).map((callback) => callback())
+        this.eventEmitter
+          .listeners(ButtonEventType[ButtonEventType.CLICK])
+          .map((callback) => callback())
       );
     } finally {
       this.enable();
@@ -82,30 +77,30 @@ export class Button {
 
   private disable(): void {
     this.element.style.cursor = "not-allowed";
-    this.customButton.disable(this.element);
-    this.element.onclick = undefined;
-    this.element.onmouseenter = undefined;
-    this.element.onmousedown = undefined;
-    this.element.onmouseup = undefined;
-    this.element.onmouseleave = undefined;
+    this.eventEmitter.emit(ButtonEventType[ButtonEventType.DISABLE]);
+    this.element.removeEventListener("click", this.click);
+    this.element.removeEventListener("mouseenter", this.hover);
+    this.element.removeEventListener("mousedown", this.down);
+    this.element.removeEventListener("mouseup", this.up);
+    this.element.removeEventListener("mouseleave", this.leave);
   }
 
   private hover = (): void => {
-    this.customButton.hover(this.element);
+    this.eventEmitter.emit(ButtonEventType[ButtonEventType.HOVER]);
   };
 
   private down = (): void => {
     this.hover();
-    this.customButton.down(this.element);
+    this.eventEmitter.emit(ButtonEventType[ButtonEventType.DOWN]);
   };
 
   private up = (): void => {
-    this.customButton.up(this.element);
+    this.eventEmitter.emit(ButtonEventType[ButtonEventType.UP]);
   };
 
   private leave = (): void => {
     this.up();
-    this.customButton.leave(this.element);
+    this.eventEmitter.emit(ButtonEventType[ButtonEventType.LEAVE]);
   };
 
   public show(): void {

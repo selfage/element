@@ -1,6 +1,6 @@
 {
   "name": "@selfage/element",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Create vanilla HTML elements/tags with structured indents.",
   "repository": {
     "type": "git",

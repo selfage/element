@@ -16,7 +16,7 @@ export class Button {
   private eventEmitter = new EventEmitter();
   private displayStyle: string;
 
-  public constructor(public element: HTMLButtonElement) {}
+  public constructor(public ele: HTMLButtonElement) {}
 
   public static create(attributeStr: string, ...childNodes: Node[]): Button {
     let button = new Button(E.button(attributeStr, ...childNodes));
@@ -33,8 +33,8 @@ export class Button {
   }
 
   public init(): void {
-    this.element.type = "button";
-    this.displayStyle = this.element.style.display;
+    this.ele.type = "button";
+    this.displayStyle = this.ele.style.display;
     this.enable();
   }
 
@@ -53,13 +53,13 @@ export class Button {
   }
 
   private enable(): void {
-    this.element.style.cursor = "pointer";
+    this.ele.style.cursor = "pointer";
     this.eventEmitter.emit(ButtonEventType[ButtonEventType.ENABLE]);
-    this.element.addEventListener("click", this.click);
-    this.element.addEventListener("mouseenter", this.hover);
-    this.element.addEventListener("mousedown", this.down);
-    this.element.addEventListener("mouseup", this.up);
-    this.element.addEventListener("mouseleave", this.leave);
+    this.ele.addEventListener("click", this.click);
+    this.ele.addEventListener("mouseenter", this.hover);
+    this.ele.addEventListener("mousedown", this.down);
+    this.ele.addEventListener("mouseup", this.up);
+    this.ele.addEventListener("mouseleave", this.leave);
   }
 
   private click = async (): Promise<void> => {
@@ -76,13 +76,13 @@ export class Button {
   };
 
   private disable(): void {
-    this.element.style.cursor = "not-allowed";
+    this.ele.style.cursor = "not-allowed";
     this.eventEmitter.emit(ButtonEventType[ButtonEventType.DISABLE]);
-    this.element.removeEventListener("click", this.click);
-    this.element.removeEventListener("mouseenter", this.hover);
-    this.element.removeEventListener("mousedown", this.down);
-    this.element.removeEventListener("mouseup", this.up);
-    this.element.removeEventListener("mouseleave", this.leave);
+    this.ele.removeEventListener("click", this.click);
+    this.ele.removeEventListener("mouseenter", this.hover);
+    this.ele.removeEventListener("mousedown", this.down);
+    this.ele.removeEventListener("mouseup", this.up);
+    this.ele.removeEventListener("mouseleave", this.leave);
   }
 
   private hover = (): void => {
@@ -104,14 +104,14 @@ export class Button {
   };
 
   public show(): void {
-    this.element.style.display = this.displayStyle;
+    this.ele.style.display = this.displayStyle;
   }
 
   public hide(): void {
-    this.element.style.display = "none";
+    this.ele.style.display = "none";
   }
 
   public triggerClick(): void {
-    this.element.click();
+    this.ele.click();
   }
 }

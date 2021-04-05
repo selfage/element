@@ -6,7 +6,7 @@
 
 ## Overview
 
-Written in TypeScript and compiled to ES6 with inline source map & source. See [@selfage/tsconfig](https://www.npmjs.com/package/@selfage/tsconfig) for full compiler options. Provides a simple factory to create HTML elements/tags, and a few most-common wrappers around basic HTML elements/tags, promoting a type-safe pattern to build single page applications (SPA) using pure JavaScript/TypeScript without transpiling JSX or SASS, or connecting events defined in HTML-like files with handlers in JS/TS files.
+Written in TypeScript and compiled to ES6 with inline source map & source. See [@selfage/tsconfig](https://www.npmjs.com/package/@selfage/tsconfig) for full compiler options. Provides a simple factory to create HTML elements/tags, and a few simple components built this way, promoting a type-safe pattern to build single page applications (SPA) using pure JavaScript/TypeScript without transpiling HTML-like syntax.
 
 ## Create tags with HTML-like structure/indents
 
@@ -43,17 +43,17 @@ Usually, we not only need a reference to the top-level element but also need to 
 import { E } from "@selfage/element/factory";
 import { Ref } from "@selfage/ref";
 
-let childA = new Ref<HTMLDivElement>();
-let childB = new Ref<HTMLDivElement>();
+let childDivA = new Ref<HTMLDivElement>();
+let childDivB = new Ref<HTMLDivElement>();
 let div = E.div(
   `class="parent" style="display: absolute;"`,
   E.divRef(
-    childA,
+    childDivA,
     `class="childA" style="display: block; font-size: 24px;"`,
     E.text("The first child")
   ),
   E.divRef(
-    childB,
+    childDivB,
     `class="childB"`,
     E.div(
       `class="deepChildB" style="font-size: 14px;"`,
@@ -62,8 +62,12 @@ let div = E.div(
   )
 );
 
-childA.val.className; // childA
-childB.val.className; // childB
+childDivA.val.className; // childA
+childDivB.val.className; // childB
 ```
 
-Note the use of `E.divRef()` which can then take `childA` and `childB` as the first arguments.
+Note the use of `E.divRef()` which can then take `childDivA` and `childDivB` as the first arguments.
+
+## Button component
+
+

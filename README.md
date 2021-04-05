@@ -204,5 +204,5 @@ export class TextInput {
 
 We can use `EventEmitter` from Nodejs to help add and remove listeners, while expose `on()` and `off()`, and emit events whenever ready.
 
-However, if the callback function requires different arguments for each event, you might have to define `on()` and `off()` for each event. 
+However, if each event provides different arguments to their callback functions, you might have to define `on()` and `off()` for each event. 
 

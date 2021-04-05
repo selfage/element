@@ -129,11 +129,9 @@ Note that we are only explaining a pattern that we found the most readable, test
 
 We are using [text_input.ts](https://github.com/selfage/element/blob/main/text_input.ts) as the exmaple to explain. You can also refer to [button.ts](https://github.com/selfage/element/blob/main/button.ts) as another example.
 
-You can refer to [button.ts](https://github.com/selfage/element/blob/main/button.ts) and [text_input.ts](https://github.com/selfage/element/blob/main/text_input.ts) as examples of the pattern, which breaks down to injecting elements, initializing, and exposing custom events.
-
 ### Injecting and exposing elements
 
-```
+```TypeScript
 export class TextInput {
   public constructor(public ele: HTMLInputElement, /* Other dependencies */) {}
 
@@ -204,5 +202,7 @@ export class TextInput {
 }
 ```
 
-We can use `EventEmitter` from Nodejs to help add and remove listeners, while expose `on()` and `off()`, and emit events whenever ready. 
+We can use `EventEmitter` from Nodejs to help add and remove listeners, while expose `on()` and `off()`, and emit events whenever ready.
+
+However, if the callback function requires different arguments for each event, you might have to define `on()` and `off()` for each event. 
 

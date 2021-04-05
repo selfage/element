@@ -52,7 +52,7 @@ export class Button {
     this.eventEmitter.off(ButtonEventType[eventType], callback);
   }
 
-  private enable(): void {
+  public enable(): void {
     this.ele.style.cursor = "pointer";
     this.eventEmitter.emit(ButtonEventType[ButtonEventType.ENABLE]);
     this.ele.addEventListener("click", this.click);
@@ -75,7 +75,7 @@ export class Button {
     }
   };
 
-  private disable(): void {
+  public disable(): void {
     this.ele.style.cursor = "not-allowed";
     this.eventEmitter.emit(ButtonEventType[ButtonEventType.DISABLE]);
     this.ele.removeEventListener("click", this.click);

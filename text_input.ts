@@ -2,7 +2,7 @@ import EventEmitter = require("events");
 import { E } from "./factory";
 import { Ref, assign } from "@selfage/ref";
 
-export enum InputEventType {
+export enum TextInputEventType {
   ENTER = 1,
 }
 
@@ -29,23 +29,23 @@ export class TextInput {
   }
 
   public on(
-    eventType: InputEventType,
+    eventType: TextInputEventType,
     callback: () => Promise<void> | void
   ): void {
-    this.eventEmitter.on(InputEventType[eventType], callback);
+    this.eventEmitter.on(TextInputEventType[eventType], callback);
   }
 
   public off(
-    eventType: InputEventType,
+    eventType: TextInputEventType,
     callback: () => Promise<void> | void
   ): void {
-    this.eventEmitter.off(InputEventType[eventType], callback);
+    this.eventEmitter.off(TextInputEventType[eventType], callback);
   }
 
   private keydown = (event: KeyboardEvent): void => {
     if (event.keyCode !== TextInput.ENTER_KEY_CODE) {
       return;
     }
-    this.eventEmitter.emit(InputEventType[InputEventType.ENTER]);
+    this.eventEmitter.emit(TextInputEventType[TextInputEventType.ENTER]);
   };
 }

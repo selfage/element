@@ -2,50 +2,36 @@ import EventEmitter = require("events");
 import { E } from "./factory";
 import { Ref, assign } from "@selfage/ref";
 
-export enum TextInputEventType {
-  ENTER = 1,
+export declare interface TextInput {
+  on(event: "enter", listener: () => void): this;
+  on(event: string, listener: Function): this;
 }
 
-export class TextInput {
+export class TextInput extends EventEmitter {
   private static ENTER_KEY_CODE = 13;
 
-  private eventEmitter = new EventEmitter();
-
-  public constructor(public ele: HTMLInputElement) {}
+  public constructor(public ele: HTMLInputElement) {
+    super();
+  }
 
   public static create(attributes: string): TextInput {
-    let input = new TextInput(E.input(attributes));
-    input.init();
-    return input;
+    return new TextInput(E.input(attributes)).init();
   }
 
   public static createRef(ref: Ref<TextInput>, attributes: string): TextInput {
     return assign(ref, TextInput.create(attributes));
   }
 
-  public init(): void {
+  public init(): this {
     this.ele.type = "text";
     this.ele.addEventListener("keydown", this.keydown);
-  }
-
-  public on(
-    eventType: TextInputEventType,
-    callback: () => Promise<void> | void
-  ): void {
-    this.eventEmitter.on(TextInputEventType[eventType], callback);
-  }
-
-  public off(
-    eventType: TextInputEventType,
-    callback: () => Promise<void> | void
-  ): void {
-    this.eventEmitter.off(TextInputEventType[eventType], callback);
+    return this;
   }
 
   private keydown = (event: KeyboardEvent): void => {
     if (event.keyCode !== TextInput.ENTER_KEY_CODE) {
       return;
     }
-    this.eventEmitter.emit(TextInputEventType[TextInputEventType.ENTER]);
+    this.emit("enter");
   };
 }

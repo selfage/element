@@ -2,26 +2,26 @@ import EventEmitter = require("events");
 import { E } from "./factory";
 import { Ref, assign } from "@selfage/ref";
 
-export enum ButtonEventType {
-  ENABLE = 1,
-  DISABLE = 2,
-  CLICK = 3,
-  HOVER = 4,
-  DOWN = 5,
-  UP = 6,
-  LEAVE = 7,
+export declare interface Button {
+  on(event: "enable", listener: () => void): this;
+  on(event: "disable", listener: () => void): this;
+  on(event: "click", listener: () => Promise<void>): this;
+  on(event: "hover", listener: () => void): this;
+  on(event: "down", listener: () => void): this;
+  on(event: "up", listener: () => void): this;
+  on(event: "leave", listener: () => void): this;
+  on(event: string, listener: Function): this;
 }
 
-export class Button {
-  private eventEmitter = new EventEmitter();
+export class Button extends EventEmitter {
   private displayStyle: string;
 
-  public constructor(public ele: HTMLButtonElement) {}
+  public constructor(public ele: HTMLButtonElement) {
+    super();
+  }
 
   public static create(attributeStr: string, ...childNodes: Node[]): Button {
-    let button = new Button(E.button(attributeStr, ...childNodes));
-    button.init();
-    return button;
+    return new Button(E.button(attributeStr, ...childNodes)).init();
   }
 
   public static createRef(
@@ -32,29 +32,16 @@ export class Button {
     return assign(ref, Button.create(attributeStr, ...childNodes));
   }
 
-  public init(): void {
+  public init(): this {
     this.ele.type = "button";
     this.displayStyle = this.ele.style.display;
     this.enable();
-  }
-
-  public on(
-    eventType: ButtonEventType,
-    callback: () => Promise<void> | void
-  ): void {
-    this.eventEmitter.on(ButtonEventType[eventType], callback);
-  }
-
-  public off(
-    eventType: ButtonEventType,
-    callback: () => Promise<void> | void
-  ): void {
-    this.eventEmitter.off(ButtonEventType[eventType], callback);
+    return this;
   }
 
   public enable(): void {
     this.ele.style.cursor = "pointer";
-    this.eventEmitter.emit(ButtonEventType[ButtonEventType.ENABLE]);
+    this.emit("enable");
     this.ele.addEventListener("click", this.click);
     this.ele.addEventListener("mouseenter", this.hover);
     this.ele.addEventListener("mousedown", this.down);
@@ -65,11 +52,7 @@ export class Button {
   private click = async (): Promise<void> => {
     this.disable();
     try {
-      await Promise.all(
-        this.eventEmitter
-          .listeners(ButtonEventType[ButtonEventType.CLICK])
-          .map((callback) => callback())
-      );
+      await Promise.all(this.listeners("click").map((callback) => callback()));
     } finally {
       this.enable();
     }
@@ -77,7 +60,7 @@ export class Button {
 
   public disable(): void {
     this.ele.style.cursor = "not-allowed";
-    this.eventEmitter.emit(ButtonEventType[ButtonEventType.DISABLE]);
+    this.emit("disable");
     this.ele.removeEventListener("click", this.click);
     this.ele.removeEventListener("mouseenter", this.hover);
     this.ele.removeEventListener("mousedown", this.down);
@@ -86,21 +69,21 @@ export class Button {
   }
 
   private hover = (): void => {
-    this.eventEmitter.emit(ButtonEventType[ButtonEventType.HOVER]);
+    this.emit("hover");
   };
 
   private down = (): void => {
     this.hover();
-    this.eventEmitter.emit(ButtonEventType[ButtonEventType.DOWN]);
+    this.emit("down");
   };
 
   private up = (): void => {
-    this.eventEmitter.emit(ButtonEventType[ButtonEventType.UP]);
+    this.emit("up");
   };
 
   private leave = (): void => {
     this.up();
-    this.eventEmitter.emit(ButtonEventType[ButtonEventType.LEAVE]);
+    this.emit("leave");
   };
 
   public show(): void {

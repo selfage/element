@@ -1,6 +1,6 @@
 {
   "name": "@selfage/element",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Create vanilla HTML elements/tags with structured indents.",
   "repository": {
     "type": "git",
@@ -36,6 +36,6 @@
     "typescript": "^4.2.3"
   },
   "dependencies": {
-    "@selfage/ref": "^1.0.1"
+    "@selfage/ref": "^1.0.2"
   }
 }

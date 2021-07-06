@@ -38,7 +38,7 @@ export class ButtonController extends EventEmitter {
     this.button.addEventListener("mouseleave", this.leave);
   }
 
-  private click = async (): Promise<void> => {
+  public click = async (): Promise<void> => {
     this.disable();
     try {
       await Promise.all(this.listeners("click").map((callback) => callback()));
@@ -57,20 +57,20 @@ export class ButtonController extends EventEmitter {
     this.button.removeEventListener("mouseleave", this.leave);
   }
 
-  private hover = (): void => {
+  public hover = (): void => {
     this.emit("hover");
   };
 
-  private down = (): void => {
+  public down = (): void => {
     this.hover();
     this.emit("down");
   };
 
-  private up = (): void => {
+  public up = (): void => {
     this.emit("up");
   };
 
-  private leave = (): void => {
+  public leave = (): void => {
     this.up();
     this.emit("leave");
   };
@@ -81,9 +81,5 @@ export class ButtonController extends EventEmitter {
 
   public hide(): void {
     this.button.style.display = "none";
-  }
-
-  public triggerClick(): void {
-    this.button.click();
   }
 }

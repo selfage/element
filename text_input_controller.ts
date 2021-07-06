@@ -22,7 +22,7 @@ export class TextInputController extends EventEmitter {
     return this;
   }
 
-  private keydown = (event: KeyboardEvent): void => {
+  public keydown = (event: KeyboardEvent): void => {
     if (event.keyCode !== TextInputController.ENTER_KEY_CODE) {
       return;
     }

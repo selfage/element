@@ -70,6 +70,7 @@ export class ButtonController extends EventEmitter {
 
   public restoreEnable(): void {
     this.enable = this.enableEffective;
+    this.enable();
   }
 
   public hover = (): void => {

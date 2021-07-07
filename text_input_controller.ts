@@ -1,7 +1,7 @@
 import EventEmitter = require("events");
 
 export declare interface TextInputController {
-  on(event: "enter", listener: () => void): this;
+  on(event: "enter", listener: () => Promise<void>): this;
   on(event: string, listener: Function): this;
 }
 
@@ -28,4 +28,8 @@ export class TextInputController extends EventEmitter {
     }
     this.emit("enter");
   };
+
+  public async enter(): Promise<void> {
+    await Promise.all(this.listeners("enter").map((callback) => callback()));
+  }
 }

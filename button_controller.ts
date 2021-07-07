@@ -12,6 +12,8 @@ export declare interface ButtonController {
 }
 
 export class ButtonController extends EventEmitter {
+  public enable: () => void = this.enableEffective;
+
   private displayStyle: string;
 
   public constructor(private button: HTMLButtonElement) {
@@ -29,13 +31,17 @@ export class ButtonController extends EventEmitter {
     return this;
   }
 
-  public enable(): void {
+  public enableEffective(): void {
     this.emit("enable");
     this.button.addEventListener("click", this.click);
     this.button.addEventListener("mouseenter", this.hover);
     this.button.addEventListener("mousedown", this.down);
     this.button.addEventListener("mouseup", this.up);
     this.button.addEventListener("mouseleave", this.leave);
+  }
+
+  public enableNoop(): void {
+    // Noop.
   }
 
   public click = async (): Promise<void> => {
@@ -55,6 +61,15 @@ export class ButtonController extends EventEmitter {
     this.button.removeEventListener("mousedown", this.down);
     this.button.removeEventListener("mouseup", this.up);
     this.button.removeEventListener("mouseleave", this.leave);
+  }
+
+  public forceDisable(): void {
+    this.disable();
+    this.enable = this.enableNoop;
+  }
+
+  public restoreEnable(): void {
+    this.enable = this.enableEffective;
   }
 
   public hover = (): void => {

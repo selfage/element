@@ -86,9 +86,9 @@ More precsily, when the button is clicked, it will first emit `disable` event, t
 
 `hover` event corresponds to `mouseenter` event. `down` to `mousedown`. `up` to `mouseup`. `leave` to `mouseleave`. The difference is that when `mousedown` happens, `hover` and `down` happen in sequence, and when `mouseleave` happens, `up` and `leave` happen in sequence.
 
-Finally, you can still add event listeners directly on the button element itself `buttonEle`.
+You can still add event listeners directly on the button element itself `buttonEle`.
 
-Other public methods include `enable()`, `disable()`, `show()`, `hide()`, and `triggerClick()`.
+All events can be triggered from corresponding public functions. In addition, `forceDisable()` is used to disable the button that cannot be enabled by `enable()`, which can be used when handling `click` event that you don't want the button to be enabled after the completion of handling `click` event, until you call `restoreEnable()`.
 
 ## Text input controller
 

@@ -33,6 +33,26 @@ export class ElementFactory {
     return assign(ref, this.text(content));
   }
 
+  public label(
+    attributeStr: string,
+    ...childNodes: Array<Node>
+  ): HTMLLabelElement {
+    let ele = document.createElement("template");
+    ele.innerHTML = `<label ${attributeStr}></label>`;
+    return ElementFactory.appendChildren(
+      ele.content.firstElementChild,
+      childNodes
+    ) as HTMLLabelElement;
+  }
+
+  public labelRef(
+    ref: Ref<HTMLLabelElement>,
+    attributeStr: string,
+    ...childNodes: Array<Node>
+  ): HTMLLabelElement {
+    return assign(ref, this.label(attributeStr, ...childNodes));
+  }
+
   public image(attributeStr: string): HTMLImageElement {
     let ele = document.createElement("template");
     ele.innerHTML = `<img ${attributeStr}/>`;
@@ -57,6 +77,19 @@ export class ElementFactory {
     attributeStr: string
   ): HTMLInputElement {
     return assign(ref, this.input(attributeStr));
+  }
+
+  public textarea(attributeStr: string): HTMLTextAreaElement {
+    let ele = document.createElement("template");
+    ele.innerHTML = `<textarea ${attributeStr}></textarea>`;
+    return ele.content.firstElementChild as HTMLTextAreaElement;
+  }
+
+  public textareaRef(
+    ref: Ref<HTMLTextAreaElement>,
+    attributeStr: string
+  ): HTMLTextAreaElement {
+    return assign(ref, this.textarea(attributeStr));
   }
 
   public button(

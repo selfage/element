@@ -82,13 +82,13 @@ let buttonController = ButtonController.create(buttonEle);
 
 There are 6 events emiited from it: `enable`, `disable`, `click`, `hover`, `down`, `up`, and `leave`.
 
-More precsily, when the button is clicked, it will first emit `disable` event, then wait for the executions of listeners on `click` event, including `async` listeners, and finally emit `enable` event. It makes sure that `click` event will not be emitted again until re-enabled.
+More precsily, when the button is clicked, it will first emit `disable` event, then wait for the executions of listeners on `click` event, including `async` listeners, and finally emit `enable` event. It makes sure that `click` event will not be emitted again until re-enabled. Each callback on `click` event also needs to return a boolean indicating whether it wants to re-enable the button. And if any of the callbacks returns false, the button will stay disabled until explicitly enabled, i.e. by calling `enable()`.
 
 `hover` event corresponds to `mouseenter` event. `down` to `mousedown`. `up` to `mouseup`. `leave` to `mouseleave`. The difference is that when `mousedown` happens, `hover` and `down` happen in sequence, and when `mouseleave` happens, `up` and `leave` happen in sequence.
 
-You can still add event listeners directly on the button element itself `buttonEle`.
+All events can be triggered from corresponding public functions.
 
-All events can be triggered from corresponding public functions. In addition, `forceDisable()` is used to disable the button that cannot be enabled by `enable()`, which can be used when handling `click` event that you don't want the button to be enabled after the completion of handling `click` event, until you call `restoreEnable()`.
+You can still add event listeners directly on the button element itself `buttonEle`.
 
 ## Text input controller
 

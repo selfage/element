@@ -3,7 +3,8 @@ import EventEmitter = require("events");
 export declare interface ButtonController {
   on(event: "enable", listener: () => void): this;
   on(event: "disable", listener: () => void): this;
-  on(event: "click", listener: () => Promise<void>): this;
+  // Returns true to enable the button after click. Otherwise keep disabled.
+  on(event: "click", listener: () => Promise<boolean>): this;
   on(event: "hover", listener: () => void): this;
   on(event: "down", listener: () => void): this;
   on(event: "up", listener: () => void): this;
@@ -12,9 +13,8 @@ export declare interface ButtonController {
 }
 
 export class ButtonController extends EventEmitter {
-  public enable: () => void = this.enableEffective;
-
   private displayStyle: string;
+  private cursorStyle: string;
 
   public constructor(private button: HTMLButtonElement) {
     super();
@@ -27,50 +27,40 @@ export class ButtonController extends EventEmitter {
   public init(): this {
     this.button.type = "button";
     this.displayStyle = this.button.style.display;
-    this.enable();
-    return this;
-  }
-
-  public enableEffective(): void {
-    this.emit("enable");
+    this.cursorStyle = this.button.style.cursor;
     this.button.addEventListener("click", this.click);
     this.button.addEventListener("mouseenter", this.hover);
     this.button.addEventListener("mousedown", this.down);
     this.button.addEventListener("mouseup", this.up);
     this.button.addEventListener("mouseleave", this.leave);
+    return this;
   }
 
-  public enableNoop(): void {
-    // Noop.
+  public enable(): void {
+    this.button.style.cursor = this.cursorStyle;
+    this.button.disabled = false;
+    this.emit("enable");
   }
 
   public click = async (): Promise<void> => {
     this.disable();
+    let toEnable = false;
     try {
-      await Promise.all(this.listeners("click").map((callback) => callback()));
+      let results = await Promise.all(
+        this.listeners("click").map((callback) => callback())
+      );
+      toEnable = !results.some((res) => !res);
     } finally {
-      this.enable();
+      if (toEnable) {
+        this.enable();
+      }
     }
   };
 
   public disable(): void {
     this.button.style.cursor = "not-allowed";
+    this.button.disabled = true;
     this.emit("disable");
-    this.button.removeEventListener("click", this.click);
-    this.button.removeEventListener("mouseenter", this.hover);
-    this.button.removeEventListener("mousedown", this.down);
-    this.button.removeEventListener("mouseup", this.up);
-    this.button.removeEventListener("mouseleave", this.leave);
-  }
-
-  public forceDisable(): void {
-    this.disable();
-    this.enable = this.enableNoop;
-  }
-
-  public restoreEnable(): void {
-    this.enable = this.enableEffective;
-    this.enable();
   }
 
   public hover = (): void => {

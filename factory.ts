@@ -1,14 +1,14 @@
 import { Ref, assign } from "@selfage/ref";
 
 export class ElementFactory {
-  private static appendChildren(parent: Node, childNodes: Node[]): Node {
+  private static appendChildren(parent: Node, childNodes: Array<Node>): Node {
     for (let childNode of childNodes) {
       parent.appendChild(childNode);
     }
     return parent;
   }
 
-  public div(attributeStr: string, ...childNodes: Node[]): HTMLDivElement {
+  public div(attributeStr: string, ...childNodes: Array<Node>): HTMLDivElement {
     let ele = document.createElement("template");
     ele.innerHTML = `<div ${attributeStr}></div>`;
     return ElementFactory.appendChildren(
@@ -20,7 +20,7 @@ export class ElementFactory {
   public divRef(
     ref: Ref<HTMLDivElement>,
     attributeStr: string,
-    ...childNodes: Node[]
+    ...childNodes: Array<Node>
   ): HTMLDivElement {
     return assign(ref, this.div(attributeStr, ...childNodes));
   }
@@ -94,7 +94,7 @@ export class ElementFactory {
 
   public button(
     attributeStr: string,
-    ...childNodes: Node[]
+    ...childNodes: Array<Node>
   ): HTMLButtonElement {
     let ele = document.createElement("template");
     ele.innerHTML = `<button ${attributeStr}/>`;
@@ -107,7 +107,7 @@ export class ElementFactory {
   public buttonRef(
     ref: Ref<HTMLButtonElement>,
     attributeStr: string,
-    ...childNodes: Node[]
+    ...childNodes: Array<Node>
   ): HTMLButtonElement {
     return assign(ref, this.button(attributeStr, ...childNodes));
   }
@@ -128,20 +128,24 @@ export class ElementFactory {
     return assign(ref, this.a(attributeStr, text));
   }
 
-  public svg(attributeStr: string, svgPath: SVGPathElement): SVGSVGElement {
+  public svg(
+    attributeStr: string,
+    ...svgPaths: Array<SVGPathElement>
+  ): SVGSVGElement {
     let ele = document.createElement("template");
     ele.innerHTML = `<svg ${attributeStr}></svg>`;
-    return ElementFactory.appendChildren(ele.content.firstElementChild, [
-      svgPath,
-    ]) as SVGSVGElement;
+    return ElementFactory.appendChildren(
+      ele.content.firstElementChild,
+      svgPaths
+    ) as SVGSVGElement;
   }
 
   public svgRef(
     ref: Ref<SVGSVGElement>,
     attributeStr: string,
-    svgPath: SVGPathElement
+    ...svgPaths: Array<SVGPathElement>
   ): SVGSVGElement {
-    return assign(ref, this.svg(attributeStr, svgPath));
+    return assign(ref, this.svg(attributeStr, ...svgPaths));
   }
 
   public path(attributeStr: string): SVGPathElement {

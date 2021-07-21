@@ -102,3 +102,17 @@ let inputEle = E.input(`class="inputA"`);
 let inputController = TextInputController.create(inputEle);
 ```
 
+## Hideable element controller
+
+It simply keeps track of the `display` style when `hide()` and restores it when `show()`.
+
+```TypeScript
+import { E } from '@selfage/element/factory';
+import { HideableElementController } from '@selfage/element/hideable_element_controller';
+
+let ele = E.div(`class="inputA" style="display: flex;"`);
+let hideableElement = new HideableElementController(ele);
+hideableElement.hide();
+hideableElement.show();
+```
+

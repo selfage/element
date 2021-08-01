@@ -3,8 +3,9 @@ import EventEmitter = require("events");
 export declare interface ButtonController {
   on(event: "enable", listener: () => void): this;
   on(event: "disable", listener: () => void): this;
-  // Returns true to enable the button after click. Otherwise keep disabled.
-  on(event: "click", listener: () => Promise<boolean>): this;
+  // Returns true to keep the button disabled after click. Otherwise it will be
+  // re-enabled.
+  on(event: "click", listener: () => Promise<boolean | undefined>): this;
   on(event: "hover", listener: () => void): this;
   on(event: "down", listener: () => void): this;
   on(event: "up", listener: () => void): this;
@@ -44,14 +45,14 @@ export class ButtonController extends EventEmitter {
 
   public click = async (): Promise<void> => {
     this.disable();
-    let toEnable = false;
+    let keepDisabled = false;
     try {
-      let results = await Promise.all(
+      let keepDisableds = await Promise.all(
         this.listeners("click").map((callback) => callback())
       );
-      toEnable = !results.some((res) => !res);
+      keepDisabled = keepDisableds.some((res) => res);
     } finally {
-      if (toEnable) {
+      if (!keepDisabled) {
         this.enable();
       }
     }

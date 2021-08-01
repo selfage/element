@@ -82,7 +82,7 @@ let buttonController = ButtonController.create(buttonEle);
 
 There are 6 events emiited from it: `enable`, `disable`, `click`, `hover`, `down`, `up`, and `leave`.
 
-More precsily, when the button is clicked, it will first emit `disable` event, then wait for the executions of listeners on `click` event, including `async` listeners, and finally emit `enable` event. It makes sure that `click` event will not be emitted again until re-enabled. Each callback on `click` event also needs to return a boolean indicating whether it wants to re-enable the button. And if any of the callbacks returns false, the button will stay disabled until explicitly enabled, i.e. by calling `enable()`.
+More precsily, when the button is clicked, it will first emit `disable` event, then wait for the executions of listeners on `click` event, including `async` listeners, and finally emit `enable` event. It makes sure that `click` event will not be emitted again until re-enabled. Each callback on `click` event also needs to return a boolean indicating whether it wants to keep the button disabled. And if any of the callbacks returns true, the button will keep disabled until explicitly enabled, i.e. by calling `enable()`.
 
 `hover` event corresponds to `mouseenter` event. `down` to `mousedown`. `up` to `mouseup`. `leave` to `mouseleave`. The difference is that when `mousedown` happens, `hover` and `down` happen in sequence, and when `mouseleave` happens, `up` and `leave` happen in sequence.
 

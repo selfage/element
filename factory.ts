@@ -160,6 +160,19 @@ export class ElementFactory {
   ): SVGPathElement {
     return assign(ref, this.path(attributeStr));
   }
+
+  public iframe(attributeStr: string): HTMLIFrameElement {
+    let ele = document.createElement("template");
+    ele.innerHTML = `<iframe ${attributeStr}></iframe>`;
+    return ele.content.firstElementChild as HTMLIFrameElement;
+  }
+
+  public iframeRef(
+    ref: Ref<HTMLIFrameElement>,
+    attributeStr: string
+  ): HTMLIFrameElement {
+    return assign(ref, this.iframe(attributeStr));
+  }
 }
 
 // Use abbreviation only to boost productivity.

@@ -6,8 +6,6 @@ export declare interface TextInputController {
 }
 
 export class TextInputController extends EventEmitter {
-  private static ENTER_KEY_CODE = 13;
-
   public constructor(private input: HTMLInputElement) {
     super();
   }
@@ -23,7 +21,7 @@ export class TextInputController extends EventEmitter {
   }
 
   public keydown = (event: KeyboardEvent): void => {
-    if (event.keyCode !== TextInputController.ENTER_KEY_CODE) {
+    if (event.code !== "Enter") {
       return;
     }
     this.emit("enter");

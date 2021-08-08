@@ -29,11 +29,11 @@ export class ButtonController extends EventEmitter {
     this.button.type = "button";
     this.displayStyle = this.button.style.display;
     this.cursorStyle = this.button.style.cursor;
-    this.button.addEventListener("click", this.click);
-    this.button.addEventListener("mouseenter", this.hover);
-    this.button.addEventListener("mousedown", this.down);
-    this.button.addEventListener("mouseup", this.up);
-    this.button.addEventListener("mouseleave", this.leave);
+    this.button.addEventListener("click", () => this.click());
+    this.button.addEventListener("mouseenter", () => this.hover());
+    this.button.addEventListener("mousedown", () => this.down());
+    this.button.addEventListener("mouseup", () => this.up());
+    this.button.addEventListener("mouseleave", () => this.leave());
     return this;
   }
 
@@ -43,7 +43,13 @@ export class ButtonController extends EventEmitter {
     this.emit("enable");
   }
 
-  public click = async (): Promise<void> => {
+  public disable(): void {
+    this.button.style.cursor = "not-allowed";
+    this.button.disabled = true;
+    this.emit("disable");
+  }
+
+  public async click(): Promise<void> {
     this.disable();
     let keepDisabled = false;
     try {
@@ -56,31 +62,25 @@ export class ButtonController extends EventEmitter {
         this.enable();
       }
     }
-  };
-
-  public disable(): void {
-    this.button.style.cursor = "not-allowed";
-    this.button.disabled = true;
-    this.emit("disable");
   }
 
-  public hover = (): void => {
+  public hover(): void {
     this.emit("hover");
-  };
+  }
 
-  public down = (): void => {
+  public down(): void {
     this.hover();
     this.emit("down");
-  };
+  }
 
-  public up = (): void => {
+  public up(): void {
     this.emit("up");
-  };
+  }
 
-  public leave = (): void => {
+  public leave(): void {
     this.up();
     this.emit("leave");
-  };
+  }
 
   public show(): void {
     this.button.style.display = this.displayStyle;

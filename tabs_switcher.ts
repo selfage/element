@@ -1,7 +1,7 @@
 export class TabsSwitcher {
   private hidePreviousTab: () => void = () => {};
 
-  public create(): TabsSwitcher {
+  public static create(): TabsSwitcher {
     return new TabsSwitcher();
   }
 

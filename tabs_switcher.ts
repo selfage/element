@@ -10,7 +10,7 @@ export class TabsSwitcher {
     hideTab: () => void
   ): Promise<void> {
     this.hidePreviousTab();
-    showTab();
+    await showTab();
     this.hidePreviousTab = hideTab;
   }
 }

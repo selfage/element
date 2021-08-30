@@ -116,3 +116,29 @@ hideableElement.hide();
 hideableElement.show();
 ```
 
+## Tabs switcher
+
+Instead of tracking all tabs, it simply hides the tab previously shown and shows a new tab, thus a switcher.
+
+```TypeScript
+import { TabsSwitcher } from '@selfage/element/tabs_switcher';
+
+let tabA = document.createElement('div');
+tabA.style.display = 'none';
+let tabB = document.createElement('div');
+tabB.style.display = 'none';
+
+let tabsSwitcher = new TabsSwitcher();
+tabsSwitcher.show(/* showTab= */ () => {
+  tabA.style.display = 'block';
+}, /* hideTab= */ () => {
+  tabA.style.display = 'none';
+});
+// Now tabA is shown.
+tabsSwitcher.show(/* showTab= */ () => {
+  tabB.style.display = 'block';
+}, /* hideTab= */ () => {
+  tabB.style.display = 'none';
+});
+// Now tabA is hidden and taB is shown.
+```

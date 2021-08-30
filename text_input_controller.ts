@@ -1,8 +1,7 @@
 import EventEmitter = require("events");
 
 export declare interface TextInputController {
-  on(event: "enter", listener: () => Promise<void>): this;
-  on(event: string, listener: Function): this;
+  on(event: "enter", listener: () => Promise<void> | void): this;
 }
 
 export class TextInputController extends EventEmitter {

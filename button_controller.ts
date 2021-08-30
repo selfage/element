@@ -10,7 +10,6 @@ export declare interface ButtonController {
   on(event: "down", listener: () => void): this;
   on(event: "up", listener: () => void): this;
   on(event: "leave", listener: () => void): this;
-  on(event: string, listener: Function): this;
 }
 
 export class ButtonController extends EventEmitter {

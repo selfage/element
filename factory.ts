@@ -133,7 +133,8 @@ export class ElementFactory {
     ...svgPaths: Array<SVGPathElement>
   ): SVGSVGElement {
     let ele = document.createElement("template");
-    ele.innerHTML = `<svg ${attributeStr}></svg>`;
+    ele.innerHTML =
+      `<svg xmlns="http://www.w3.org/2000/svg" ${attributeStr}>` + `</svg>`;
     return ElementFactory.appendChildren(
       ele.content.firstElementChild,
       svgPaths

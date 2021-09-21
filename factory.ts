@@ -1,28 +1,41 @@
 import { Ref, assign } from "@selfage/ref";
 
+export interface ElementAttributeMap {
+  [index: string]: string;
+}
+
 export class ElementFactory {
-  private static appendChildren(parent: Node, childNodes: Array<Node>): Node {
+  private static appendChildren(parent: Node, childNodes: Array<Node>): void {
     for (let childNode of childNodes) {
       parent.appendChild(childNode);
     }
-    return parent;
   }
 
-  public div(attributeStr: string, ...childNodes: Array<Node>): HTMLDivElement {
-    let ele = document.createElement("template");
-    ele.innerHTML = `<div ${attributeStr}></div>`;
-    return ElementFactory.appendChildren(
-      ele.content.firstElementChild,
-      childNodes
-    ) as HTMLDivElement;
+  private static setAttributes(
+    ele: Element,
+    attributes: ElementAttributeMap
+  ): void {
+    for (let [key, value] of Object.entries(attributes)) {
+      ele.setAttribute(key, value);
+    }
+  }
+
+  public div(
+    attributes: ElementAttributeMap,
+    ...childNodes: Array<Node>
+  ): HTMLDivElement {
+    let ele = document.createElement("div");
+    ElementFactory.setAttributes(ele, attributes);
+    ElementFactory.appendChildren(ele, childNodes);
+    return ele;
   }
 
   public divRef(
     ref: Ref<HTMLDivElement>,
-    attributeStr: string,
+    attributes: ElementAttributeMap,
     ...childNodes: Array<Node>
   ): HTMLDivElement {
-    return assign(ref, this.div(attributeStr, ...childNodes));
+    return assign(ref, this.div(attributes, ...childNodes));
   }
 
   public text(content = ""): Text {
@@ -34,145 +47,137 @@ export class ElementFactory {
   }
 
   public label(
-    attributeStr: string,
+    attributes: ElementAttributeMap,
     ...childNodes: Array<Node>
   ): HTMLLabelElement {
-    let ele = document.createElement("template");
-    ele.innerHTML = `<label ${attributeStr}></label>`;
-    return ElementFactory.appendChildren(
-      ele.content.firstElementChild,
-      childNodes
-    ) as HTMLLabelElement;
+    let ele = document.createElement("label");
+    ElementFactory.setAttributes(ele, attributes);
+    ElementFactory.appendChildren(ele, childNodes);
+    return ele;
   }
 
   public labelRef(
     ref: Ref<HTMLLabelElement>,
-    attributeStr: string,
+    attributes: ElementAttributeMap,
     ...childNodes: Array<Node>
   ): HTMLLabelElement {
-    return assign(ref, this.label(attributeStr, ...childNodes));
+    return assign(ref, this.label(attributes, ...childNodes));
   }
 
-  public image(attributeStr: string): HTMLImageElement {
-    let ele = document.createElement("template");
-    ele.innerHTML = `<img ${attributeStr}/>`;
-    return ele.content.firstElementChild as HTMLImageElement;
+  public image(attributes: ElementAttributeMap): HTMLImageElement {
+    let ele = document.createElement("img");
+    ElementFactory.setAttributes(ele, attributes);
+    return ele;
   }
 
   public imageRef(
     ref: Ref<HTMLImageElement>,
-    attributeStr: string
+    attributes: ElementAttributeMap
   ): HTMLImageElement {
-    return assign(ref, this.image(attributeStr));
+    return assign(ref, this.image(attributes));
   }
 
-  public input(attributeStr: string): HTMLInputElement {
-    let ele = document.createElement("template");
-    ele.innerHTML = `<input ${attributeStr}/>`;
-    return ele.content.firstElementChild as HTMLInputElement;
+  public input(attributes: ElementAttributeMap): HTMLInputElement {
+    let ele = document.createElement("input");
+    ElementFactory.setAttributes(ele, attributes);
+    return ele;
   }
 
   public inputRef(
     ref: Ref<HTMLInputElement>,
-    attributeStr: string
+    attributes: ElementAttributeMap
   ): HTMLInputElement {
-    return assign(ref, this.input(attributeStr));
+    return assign(ref, this.input(attributes));
   }
 
-  public textarea(attributeStr: string): HTMLTextAreaElement {
-    let ele = document.createElement("template");
-    ele.innerHTML = `<textarea ${attributeStr}></textarea>`;
-    return ele.content.firstElementChild as HTMLTextAreaElement;
+  public textarea(attributes: ElementAttributeMap): HTMLTextAreaElement {
+    let ele = document.createElement("textarea");
+    ElementFactory.setAttributes(ele, attributes);
+    return ele;
   }
 
   public textareaRef(
     ref: Ref<HTMLTextAreaElement>,
-    attributeStr: string
+    attributes: ElementAttributeMap
   ): HTMLTextAreaElement {
-    return assign(ref, this.textarea(attributeStr));
+    return assign(ref, this.textarea(attributes));
   }
 
   public button(
-    attributeStr: string,
+    attributes: ElementAttributeMap,
     ...childNodes: Array<Node>
   ): HTMLButtonElement {
-    let ele = document.createElement("template");
-    ele.innerHTML = `<button ${attributeStr}/>`;
-    return ElementFactory.appendChildren(
-      ele.content.firstElementChild,
-      childNodes
-    ) as HTMLButtonElement;
+    let ele = document.createElement("button");
+    ElementFactory.setAttributes(ele, attributes);
+    ElementFactory.appendChildren(ele, childNodes);
+    return ele;
   }
 
   public buttonRef(
     ref: Ref<HTMLButtonElement>,
-    attributeStr: string,
+    attributes: ElementAttributeMap,
     ...childNodes: Array<Node>
   ): HTMLButtonElement {
-    return assign(ref, this.button(attributeStr, ...childNodes));
+    return assign(ref, this.button(attributes, ...childNodes));
   }
 
-  public a(attributeStr: string, text: Text): HTMLAnchorElement {
-    let ele = document.createElement("template");
-    ele.innerHTML = `<a ${attributeStr}/>`;
-    return ElementFactory.appendChildren(ele.content.firstElementChild, [
-      text,
-    ]) as HTMLAnchorElement;
+  public a(attributes: ElementAttributeMap, text: Text): HTMLAnchorElement {
+    let ele = document.createElement("a");
+    ElementFactory.setAttributes(ele, attributes);
+    ElementFactory.appendChildren(ele, [text]);
+    return ele;
   }
 
   public aRef(
     ref: Ref<HTMLAnchorElement>,
-    attributeStr: string,
+    attributes: ElementAttributeMap,
     text: Text
   ): HTMLAnchorElement {
-    return assign(ref, this.a(attributeStr, text));
+    return assign(ref, this.a(attributes, text));
   }
 
   public svg(
-    attributeStr: string,
+    attributes: ElementAttributeMap,
     ...svgPaths: Array<SVGPathElement>
   ): SVGSVGElement {
-    let ele = document.createElement("template");
-    ele.innerHTML =
-      `<svg xmlns="http://www.w3.org/2000/svg" ${attributeStr}>` + `</svg>`;
-    return ElementFactory.appendChildren(
-      ele.content.firstElementChild,
-      svgPaths
-    ) as SVGSVGElement;
+    let ele = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    ElementFactory.setAttributes(ele, attributes);
+    ElementFactory.appendChildren(ele, svgPaths);
+    return ele;
   }
 
   public svgRef(
     ref: Ref<SVGSVGElement>,
-    attributeStr: string,
+    attributes: ElementAttributeMap,
     ...svgPaths: Array<SVGPathElement>
   ): SVGSVGElement {
-    return assign(ref, this.svg(attributeStr, ...svgPaths));
+    return assign(ref, this.svg(attributes, ...svgPaths));
   }
 
-  public path(attributeStr: string): SVGPathElement {
-    let ele = document.createElement("template");
-    ele.innerHTML = `<path ${attributeStr}/>`;
-    return ele.content.firstElementChild as SVGPathElement;
+  public path(attributes: ElementAttributeMap): SVGPathElement {
+    let ele = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    ElementFactory.setAttributes(ele, attributes);
+    return ele;
   }
 
   public pathRef(
     ref: Ref<SVGPathElement>,
-    attributeStr: string
+    attributes: ElementAttributeMap
   ): SVGPathElement {
-    return assign(ref, this.path(attributeStr));
+    return assign(ref, this.path(attributes));
   }
 
-  public iframe(attributeStr: string): HTMLIFrameElement {
-    let ele = document.createElement("template");
-    ele.innerHTML = `<iframe ${attributeStr}></iframe>`;
-    return ele.content.firstElementChild as HTMLIFrameElement;
+  public iframe(attributes: ElementAttributeMap): HTMLIFrameElement {
+    let ele = document.createElement("iframe");
+    ElementFactory.setAttributes(ele, attributes);
+    return ele;
   }
 
   public iframeRef(
     ref: Ref<HTMLIFrameElement>,
-    attributeStr: string
+    attributes: ElementAttributeMap
   ): HTMLIFrameElement {
-    return assign(ref, this.iframe(attributeStr));
+    return assign(ref, this.iframe(attributes));
   }
 }
 

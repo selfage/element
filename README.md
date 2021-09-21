@@ -16,13 +16,13 @@ One reason people like writing HTML-like code is because the tree structure can 
 import { E } from "@selfage/element/factory";
 
 let div = E.div(
-  `class="parent" style="display: absolute;"`,
+  { class: "parent", style: "display: absolute;" },
   E.div(
-    `class="childA" style="display: block; font-size: 24px;"`,
+    { class: "childA", style: "display: block; font-size: 24px;" },
     E.text("The first child")
   ),
   E.div(
-    `class="childB"`,
+    { class: "childB" },
     E.div(
       `class="deepChildB" style="font-size: 14px;"`,
       E.text("The second deep child")
@@ -46,17 +46,17 @@ import { Ref } from "@selfage/ref";
 let childDivA = new Ref<HTMLDivElement>();
 let childDivB = new Ref<HTMLDivElement>();
 let div = E.div(
-  `class="parent" style="display: absolute;"`,
+  { class: "parent", style: "display: absolute;" },
   E.divRef(
     childDivA,
-    `class="childA" style="display: block; font-size: 24px;"`,
+    { class: "childA", style: "display: block; font-size: 24px;" },
     E.text("The first child")
   ),
   E.divRef(
     childDivB,
-    `class="childB"`,
+    { class: "childB" },
     E.div(
-      `class="deepChildB" style="font-size: 14px;"`,
+      { class: "deepChildB", style: "font-size: 14px;" },
       E.text("The second deep child")
     )
   )
@@ -76,7 +76,7 @@ It provides a common feature on top of `<button type="button">` that when a butt
 import { E } from '@selfage/element/factory';
 import { ButtonController } from '@selfage/element/button_controller';
 
-let buttonEle = E.Button(`class="buttonA"`, E.text('Learn more'));
+let buttonEle = E.Button({ class: "buttonA" }, E.text('Learn more'));
 let buttonController = ButtonController.create(buttonEle);
 ```
 
@@ -98,7 +98,7 @@ It simply provides an `enter` event on top of `<input type="text">` whenever the
 import { E } from '@selfage/element/factory';
 import { TextInputController } from '@selfage/element/text_input_controller';
 
-let inputEle = E.input(`class="inputA"`);
+let inputEle = E.input({ class: "inputA" });
 let inputController = TextInputController.create(inputEle);
 ```
 
@@ -110,7 +110,7 @@ It simply keeps track of the `display` style when `hide()` and restores it when 
 import { E } from '@selfage/element/factory';
 import { HideableElementController } from '@selfage/element/hideable_element_controller';
 
-let ele = E.div(`class="inputA" style="display: flex;"`);
+let ele = E.div({ class: "inputA", style: "display: flex;" });
 let hideableElement = new HideableElementController(ele);
 hideableElement.hide();
 hideableElement.show();
@@ -121,12 +121,11 @@ hideableElement.show();
 Instead of tracking all tabs, it simply hides the tab previously shown and shows a new tab, thus a switcher.
 
 ```TypeScript
+import { E } from '@selfage/element/factory';
 import { TabsSwitcher } from '@selfage/element/tabs_switcher';
 
-let tabA = document.createElement('div');
-tabA.style.display = 'none';
-let tabB = document.createElement('div');
-tabB.style.display = 'none';
+let tabA = E.div({ style: "display: none;" });
+let tabB = E.div({ style: "display: none;" });
 
 let tabsSwitcher = new TabsSwitcher();
 tabsSwitcher.show(/* showTab= */ () => {

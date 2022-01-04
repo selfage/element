@@ -179,6 +179,19 @@ export class ElementFactory {
   ): HTMLIFrameElement {
     return assign(ref, this.iframe(attributes));
   }
+
+  public video(attributes: ElementAttributeMap): HTMLVideoElement {
+    let ele = document.createElement("video");
+    ElementFactory.setAttributes(ele, attributes);
+    return ele;
+  }
+
+  public videoRef(
+    ref: Ref<HTMLVideoElement>,
+    attributes: ElementAttributeMap
+  ): HTMLVideoElement {
+    return assign(ref, this.video(attributes));
+  }
 }
 
 // Use abbreviation only to boost productivity.

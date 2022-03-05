@@ -27,7 +27,6 @@ export class ButtonController extends EventEmitter {
   public init(): this {
     this.button.type = "button";
     this.displayStyle = this.button.style.display;
-    this.cursorStyle = this.button.style.cursor;
     this.button.addEventListener("click", () => this.click());
     this.button.addEventListener("mouseenter", () => this.hover());
     this.button.addEventListener("mousedown", () => this.down());
@@ -38,13 +37,11 @@ export class ButtonController extends EventEmitter {
 
   public enable(): void {
     this.button.style.cursor = this.cursorStyle;
-    this.button.disabled = false;
     this.emit("enable");
   }
 
   public disable(): void {
     this.button.style.cursor = "not-allowed";
-    this.button.disabled = true;
     this.emit("disable");
   }
 

@@ -192,6 +192,19 @@ export class ElementFactory {
   ): HTMLVideoElement {
     return assign(ref, this.video(attributes));
   }
+
+  public canvas(attributes: ElementAttributeMap): HTMLCanvasElement {
+    let ele = document.createElement("canvas");
+    ElementFactory.setAttributes(ele, attributes);
+    return ele;
+  }
+
+  public canvasRef(
+    ref: Ref<HTMLCanvasElement>,
+    attributes: ElementAttributeMap
+  ): HTMLCanvasElement {
+    return assign(ref, this.canvas(attributes));
+  }
 }
 
 // Use abbreviation only to boost productivity.

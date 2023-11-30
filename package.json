@@ -1,6 +1,6 @@
 {
   "name": "@selfage/element",
-  "version": "3.2.0",
+  "version": "3.3.0",
   "description": "Create vanilla HTML elements/tags with structured indents.",
   "repository": {
     "type": "git",
@@ -20,7 +20,7 @@
     "Controller",
     "TypeScript"
   ],
-  "author": "Yuxuan Xie <teststaybaka@gmail.com> (http://www.yuxuanxie.com)",
+  "author": "Yuxuan Xie <teststaybaka@gmail.com> (http://www.yuxuanxie.me)",
   "license": "GPL-3.0-or-later",
   "bugs": {
     "url": "https://github.com/selfage/element/issues"

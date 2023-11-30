@@ -167,6 +167,24 @@ export class ElementFactory {
     return assign(ref, this.path(attributes));
   }
 
+  public linearGradient(
+    attributes: ElementAttributeMap
+  ): SVGLinearGradientElement {
+    let ele = document.createElementNS(
+      "http://www.w3.org/2000/svg",
+      "linearGradient"
+    );
+    ElementFactory.setAttributes(ele, attributes);
+    return ele;
+  }
+
+  public linearGradientRef(
+    ref: Ref<SVGLinearGradientElement>,
+    attributes: ElementAttributeMap
+  ): SVGLinearGradientElement {
+    return assign(ref, this.linearGradient(attributes));
+  }
+
   public iframe(attributes: ElementAttributeMap): HTMLIFrameElement {
     let ele = document.createElement("iframe");
     ElementFactory.setAttributes(ele, attributes);

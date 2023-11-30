@@ -168,21 +168,37 @@ export class ElementFactory {
   }
 
   public linearGradient(
-    attributes: ElementAttributeMap
+    attributes: ElementAttributeMap,
+    ...svgElements: Array<SVGElement>
   ): SVGLinearGradientElement {
     let ele = document.createElementNS(
       "http://www.w3.org/2000/svg",
       "linearGradient"
     );
     ElementFactory.setAttributes(ele, attributes);
+    ElementFactory.appendChildren(ele, svgElements);
     return ele;
   }
 
   public linearGradientRef(
     ref: Ref<SVGLinearGradientElement>,
-    attributes: ElementAttributeMap
+    attributes: ElementAttributeMap,
+    ...svgElements: Array<SVGElement>
   ): SVGLinearGradientElement {
-    return assign(ref, this.linearGradient(attributes));
+    return assign(ref, this.linearGradient(attributes, ...svgElements));
+  }
+
+  public stop(attributes: ElementAttributeMap): SVGStopElement {
+    let ele = document.createElementNS("http://www.w3.org/2000/svg", "stop");
+    ElementFactory.setAttributes(ele, attributes);
+    return ele;
+  }
+
+  public stopRef(
+    ref: Ref<SVGStopElement>,
+    attributes: ElementAttributeMap
+  ): SVGStopElement {
+    return assign(ref, this.stop(attributes));
   }
 
   public iframe(attributes: ElementAttributeMap): HTMLIFrameElement {

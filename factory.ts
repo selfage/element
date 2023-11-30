@@ -138,20 +138,20 @@ export class ElementFactory {
 
   public svg(
     attributes: ElementAttributeMap,
-    ...svgPaths: Array<SVGPathElement>
+    ...svgElements: Array<SVGElement>
   ): SVGSVGElement {
     let ele = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     ElementFactory.setAttributes(ele, attributes);
-    ElementFactory.appendChildren(ele, svgPaths);
+    ElementFactory.appendChildren(ele, svgElements);
     return ele;
   }
 
   public svgRef(
     ref: Ref<SVGSVGElement>,
     attributes: ElementAttributeMap,
-    ...svgPaths: Array<SVGPathElement>
+    ...svgElements: Array<SVGElement>
   ): SVGSVGElement {
-    return assign(ref, this.svg(attributes, ...svgPaths));
+    return assign(ref, this.svg(attributes, ...svgElements));
   }
 
   public path(attributes: ElementAttributeMap): SVGPathElement {

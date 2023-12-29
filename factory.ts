@@ -90,17 +90,22 @@ export class ElementFactory {
     return assign(ref, this.input(attributes));
   }
 
-  public textarea(attributes: ElementAttributeMap): HTMLTextAreaElement {
+  public textarea(
+    attributes: ElementAttributeMap,
+    ...childNodes: Array<Node>
+  ): HTMLTextAreaElement {
     let ele = document.createElement("textarea");
     ElementFactory.setAttributes(ele, attributes);
+    ElementFactory.appendChildren(ele, childNodes);
     return ele;
   }
 
   public textareaRef(
     ref: Ref<HTMLTextAreaElement>,
-    attributes: ElementAttributeMap
+    attributes: ElementAttributeMap,
+    ...childNodes: Array<Node>
   ): HTMLTextAreaElement {
-    return assign(ref, this.textarea(attributes));
+    return assign(ref, this.textarea(attributes, ...childNodes));
   }
 
   public button(

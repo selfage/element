@@ -172,6 +172,34 @@ export class ElementFactory {
     return assign(ref, this.path(attributes));
   }
 
+  public clipPath(attributes: ElementAttributeMap): SVGClipPathElement {
+    let ele = document.createElementNS(
+      "http://www.w3.org/2000/svg",
+      "clipPath"
+    );
+    ElementFactory.setAttributes(ele, attributes);
+    return ele;
+  }
+
+  public defs(attributes: ElementAttributeMap): SVGDefsElement {
+    let ele = document.createElementNS("http://www.w3.org/2000/svg", "defs");
+    ElementFactory.setAttributes(ele, attributes);
+    return ele;
+  }
+
+  public use(attributes: ElementAttributeMap): SVGUseElement {
+    let ele = document.createElementNS("http://www.w3.org/2000/svg", "use");
+    ElementFactory.setAttributes(ele, attributes);
+    return ele;
+  }
+
+  public useRef(
+    ref: Ref<SVGUseElement>,
+    attributes: ElementAttributeMap
+  ): SVGUseElement {
+    return assign(ref, this.use(attributes));
+  }
+
   public linearGradient(
     attributes: ElementAttributeMap,
     ...svgElements: Array<SVGElement>

@@ -5,12 +5,6 @@ export interface ElementAttributeMap {
 }
 
 export class ElementFactory {
-  private static appendChildren(parent: Node, childNodes: Array<Node>): void {
-    for (let childNode of childNodes) {
-      parent.appendChild(childNode);
-    }
-  }
-
   private static setAttributes(
     ele: Element,
     attributes: ElementAttributeMap
@@ -26,7 +20,7 @@ export class ElementFactory {
   ): HTMLDivElement {
     let ele = document.createElement("div");
     ElementFactory.setAttributes(ele, attributes);
-    ElementFactory.appendChildren(ele, childNodes);
+    ele.append(...childNodes);
     return ele;
   }
 
@@ -52,7 +46,7 @@ export class ElementFactory {
   ): HTMLLabelElement {
     let ele = document.createElement("label");
     ElementFactory.setAttributes(ele, attributes);
-    ElementFactory.appendChildren(ele, childNodes);
+    ele.append(...childNodes);
     return ele;
   }
 
@@ -96,7 +90,7 @@ export class ElementFactory {
   ): HTMLTextAreaElement {
     let ele = document.createElement("textarea");
     ElementFactory.setAttributes(ele, attributes);
-    ElementFactory.appendChildren(ele, childNodes);
+    ele.append(...childNodes);
     return ele;
   }
 
@@ -114,7 +108,7 @@ export class ElementFactory {
   ): HTMLButtonElement {
     let ele = document.createElement("button");
     ElementFactory.setAttributes(ele, attributes);
-    ElementFactory.appendChildren(ele, childNodes);
+    ele.append(...childNodes);
     return ele;
   }
 
@@ -126,112 +120,22 @@ export class ElementFactory {
     return assign(ref, this.button(attributes, ...childNodes));
   }
 
-  public a(attributes: ElementAttributeMap, text: Text): HTMLAnchorElement {
+  public a(
+    attributes: ElementAttributeMap,
+    ...childNodes: Array<Node>
+  ): HTMLAnchorElement {
     let ele = document.createElement("a");
     ElementFactory.setAttributes(ele, attributes);
-    ElementFactory.appendChildren(ele, [text]);
+    ele.append(...childNodes);
     return ele;
   }
 
   public aRef(
     ref: Ref<HTMLAnchorElement>,
     attributes: ElementAttributeMap,
-    text: Text
+    ...childNodes: Array<Node>
   ): HTMLAnchorElement {
-    return assign(ref, this.a(attributes, text));
-  }
-
-  public svg(
-    attributes: ElementAttributeMap,
-    ...svgElements: Array<SVGElement>
-  ): SVGSVGElement {
-    let ele = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-    ElementFactory.setAttributes(ele, attributes);
-    ElementFactory.appendChildren(ele, svgElements);
-    return ele;
-  }
-
-  public svgRef(
-    ref: Ref<SVGSVGElement>,
-    attributes: ElementAttributeMap,
-    ...svgElements: Array<SVGElement>
-  ): SVGSVGElement {
-    return assign(ref, this.svg(attributes, ...svgElements));
-  }
-
-  public path(attributes: ElementAttributeMap): SVGPathElement {
-    let ele = document.createElementNS("http://www.w3.org/2000/svg", "path");
-    ElementFactory.setAttributes(ele, attributes);
-    return ele;
-  }
-
-  public pathRef(
-    ref: Ref<SVGPathElement>,
-    attributes: ElementAttributeMap
-  ): SVGPathElement {
-    return assign(ref, this.path(attributes));
-  }
-
-  public clipPath(attributes: ElementAttributeMap): SVGClipPathElement {
-    let ele = document.createElementNS(
-      "http://www.w3.org/2000/svg",
-      "clipPath"
-    );
-    ElementFactory.setAttributes(ele, attributes);
-    return ele;
-  }
-
-  public defs(attributes: ElementAttributeMap): SVGDefsElement {
-    let ele = document.createElementNS("http://www.w3.org/2000/svg", "defs");
-    ElementFactory.setAttributes(ele, attributes);
-    return ele;
-  }
-
-  public use(attributes: ElementAttributeMap): SVGUseElement {
-    let ele = document.createElementNS("http://www.w3.org/2000/svg", "use");
-    ElementFactory.setAttributes(ele, attributes);
-    return ele;
-  }
-
-  public useRef(
-    ref: Ref<SVGUseElement>,
-    attributes: ElementAttributeMap
-  ): SVGUseElement {
-    return assign(ref, this.use(attributes));
-  }
-
-  public linearGradient(
-    attributes: ElementAttributeMap,
-    ...svgElements: Array<SVGElement>
-  ): SVGLinearGradientElement {
-    let ele = document.createElementNS(
-      "http://www.w3.org/2000/svg",
-      "linearGradient"
-    );
-    ElementFactory.setAttributes(ele, attributes);
-    ElementFactory.appendChildren(ele, svgElements);
-    return ele;
-  }
-
-  public linearGradientRef(
-    ref: Ref<SVGLinearGradientElement>,
-    attributes: ElementAttributeMap,
-    ...svgElements: Array<SVGElement>
-  ): SVGLinearGradientElement {
-    return assign(ref, this.linearGradient(attributes, ...svgElements));
-  }
-
-  public stop(attributes: ElementAttributeMap): SVGStopElement {
-    let ele = document.createElementNS("http://www.w3.org/2000/svg", "stop");
-    ElementFactory.setAttributes(ele, attributes);
-    return ele;
-  }
-
-  public stopRef(
-    ref: Ref<SVGStopElement>,
-    attributes: ElementAttributeMap
-  ): SVGStopElement {
-    return assign(ref, this.stop(attributes));
+    return assign(ref, this.a(attributes, ...childNodes));
   }
 
   public iframe(attributes: ElementAttributeMap): HTMLIFrameElement {
@@ -271,6 +175,107 @@ export class ElementFactory {
     attributes: ElementAttributeMap
   ): HTMLCanvasElement {
     return assign(ref, this.canvas(attributes));
+  }
+
+  public svg(
+    attributes: ElementAttributeMap,
+    ...childNodes: Array<SVGElement>
+  ): SVGSVGElement {
+    let ele = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    ElementFactory.setAttributes(ele, attributes);
+    ele.append(...childNodes);
+    return ele;
+  }
+
+  public svgRef(
+    ref: Ref<SVGSVGElement>,
+    attributes: ElementAttributeMap,
+    ...childNodes: Array<SVGElement>
+  ): SVGSVGElement {
+    return assign(ref, this.svg(attributes, ...childNodes));
+  }
+
+  public path(attributes: ElementAttributeMap): SVGPathElement {
+    let ele = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    ElementFactory.setAttributes(ele, attributes);
+    return ele;
+  }
+
+  public pathRef(
+    ref: Ref<SVGPathElement>,
+    attributes: ElementAttributeMap
+  ): SVGPathElement {
+    return assign(ref, this.path(attributes));
+  }
+
+  public clipPath(
+    attributes: ElementAttributeMap,
+    ...childNodes: Array<SVGElement>
+  ): SVGClipPathElement {
+    let ele = document.createElementNS(
+      "http://www.w3.org/2000/svg",
+      "clipPath"
+    );
+    ElementFactory.setAttributes(ele, attributes);
+    ele.append(...childNodes);
+    return ele;
+  }
+
+  public linearGradient(
+    attributes: ElementAttributeMap,
+    ...childNodes: Array<SVGElement>
+  ): SVGLinearGradientElement {
+    let ele = document.createElementNS(
+      "http://www.w3.org/2000/svg",
+      "linearGradient"
+    );
+    ElementFactory.setAttributes(ele, attributes);
+    ele.append(...childNodes);
+    return ele;
+  }
+
+  public linearGradientRef(
+    ref: Ref<SVGLinearGradientElement>,
+    attributes: ElementAttributeMap,
+    ...childNodes: Array<SVGElement>
+  ): SVGLinearGradientElement {
+    return assign(ref, this.linearGradient(attributes, ...childNodes));
+  }
+
+  public stop(attributes: ElementAttributeMap): SVGStopElement {
+    let ele = document.createElementNS("http://www.w3.org/2000/svg", "stop");
+    ElementFactory.setAttributes(ele, attributes);
+    return ele;
+  }
+
+  public stopRef(
+    ref: Ref<SVGStopElement>,
+    attributes: ElementAttributeMap
+  ): SVGStopElement {
+    return assign(ref, this.stop(attributes));
+  }
+
+  public defs(
+    attributes: ElementAttributeMap,
+    ...childNodes: Array<SVGElement>
+  ): SVGDefsElement {
+    let ele = document.createElementNS("http://www.w3.org/2000/svg", "defs");
+    ElementFactory.setAttributes(ele, attributes);
+    ele.append(...childNodes);
+    return ele;
+  }
+
+  public use(attributes: ElementAttributeMap): SVGUseElement {
+    let ele = document.createElementNS("http://www.w3.org/2000/svg", "use");
+    ElementFactory.setAttributes(ele, attributes);
+    return ele;
+  }
+
+  public useRef(
+    ref: Ref<SVGUseElement>,
+    attributes: ElementAttributeMap
+  ): SVGUseElement {
+    return assign(ref, this.use(attributes));
   }
 }
 

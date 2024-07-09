@@ -71,6 +71,24 @@ export class ElementFactory {
     return assign(ref, this.image(attributes));
   }
 
+  public form(
+    attributes: ElementAttributeMap,
+    ...childNodes: Array<Node>
+  ): HTMLFormElement {
+    let ele = document.createElement("form");
+    ElementFactory.setAttributes(ele, attributes);
+    ele.append(...childNodes);
+    return ele;
+  }
+
+  public formRef(
+    ref: Ref<HTMLFormElement>,
+    attributes: ElementAttributeMap,
+    ...childNodes: Array<Node>
+  ): HTMLFormElement {
+    return assign(ref, this.form(attributes, ...childNodes));
+  }
+
   public input(attributes: ElementAttributeMap): HTMLInputElement {
     let ele = document.createElement("input");
     ElementFactory.setAttributes(ele, attributes);

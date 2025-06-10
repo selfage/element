@@ -1,7 +1,7 @@
 {
   "name": "@selfage/element",
-  "version": "3.5.1",
-  "description": "Create vanilla HTML elements/tags with structured indents.",
+  "version": "3.5.2",
+  "description": "Create vanilla HTML elements/tags with visual structures.",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/selfage/element.git"
@@ -33,12 +33,12 @@
     "!test_data/**/*"
   ],
   "devDependencies": {
-    "@selfage/cli": "^5.0.1",
+    "@selfage/cli": "^5.0.3",
     "@selfage/tsconfig": "^1.0.7",
     "@types/node": "^22.9.0",
     "typescript": "^5.6.3"
   },
   "dependencies": {
-    "@selfage/ref": "^1.0.2"
+    "@selfage/ref": "^1.0.4"
   }
 }

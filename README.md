@@ -6,7 +6,7 @@
 
 ## Overview
 
-Written in TypeScript and compiled to ES6 with inline source map & source. See [@selfage/tsconfig](https://www.npmjs.com/package/@selfage/tsconfig) for full compiler options. Provides a simple factory to create HTML elements/tags, and a few simple components built with the factory, promoting a type-safe pattern to build single page applications (SPA) using pure JavaScript/TypeScript without transpiling HTML-like syntax.
+Written in TypeScript and compiled to ES6 with inline source map & source. See [@selfage/tsconfig](https://www.npmjs.com/package/@selfage/tsconfig) for full compiler options. Provides a simple factory to create HTML elements/tags, and a few simple components built with the factory, enabling a type-safe pattern to build single page applications (SPA) using pure JavaScript/TypeScript without transpiling HTML-like syntax.
 
 ## Create elements with HTML-like structure/indents
 
@@ -24,7 +24,7 @@ let div = E.div(
   E.div(
     { class: "childB" },
     E.div(
-      `class="deepChildB" style="font-size: 14px;"`,
+      { class: "deepChildB", style: "font-size: 14px;" },
       E.text("The second deep child")
     )
   )

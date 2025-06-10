@@ -7,10 +7,12 @@ export interface ElementAttributeMap {
 export class ElementFactory {
   private static setAttributes(
     ele: Element,
-    attributes: ElementAttributeMap
+    attributes: ElementAttributeMap,
   ): void {
     for (let [key, value] of Object.entries(attributes)) {
-      ele.setAttribute(key, value);
+      if (value != null) {
+        ele.setAttribute(key, value);
+      }
     }
   }
 
@@ -66,7 +68,7 @@ export class ElementFactory {
 
   public imageRef(
     ref: Ref<HTMLImageElement>,
-    attributes: ElementAttributeMap
+    attributes: ElementAttributeMap,
   ): HTMLImageElement {
     return assign(ref, this.image(attributes));
   }
@@ -97,7 +99,7 @@ export class ElementFactory {
 
   public inputRef(
     ref: Ref<HTMLInputElement>,
-    attributes: ElementAttributeMap
+    attributes: ElementAttributeMap,
   ): HTMLInputElement {
     return assign(ref, this.input(attributes));
   }
@@ -164,7 +166,7 @@ export class ElementFactory {
 
   public iframeRef(
     ref: Ref<HTMLIFrameElement>,
-    attributes: ElementAttributeMap
+    attributes: ElementAttributeMap,
   ): HTMLIFrameElement {
     return assign(ref, this.iframe(attributes));
   }
@@ -177,7 +179,7 @@ export class ElementFactory {
 
   public videoRef(
     ref: Ref<HTMLVideoElement>,
-    attributes: ElementAttributeMap
+    attributes: ElementAttributeMap,
   ): HTMLVideoElement {
     return assign(ref, this.video(attributes));
   }
@@ -190,7 +192,7 @@ export class ElementFactory {
 
   public canvasRef(
     ref: Ref<HTMLCanvasElement>,
-    attributes: ElementAttributeMap
+    attributes: ElementAttributeMap,
   ): HTMLCanvasElement {
     return assign(ref, this.canvas(attributes));
   }
@@ -221,7 +223,7 @@ export class ElementFactory {
 
   public pathRef(
     ref: Ref<SVGPathElement>,
-    attributes: ElementAttributeMap
+    attributes: ElementAttributeMap,
   ): SVGPathElement {
     return assign(ref, this.path(attributes));
   }
@@ -232,7 +234,7 @@ export class ElementFactory {
   ): SVGClipPathElement {
     let ele = document.createElementNS(
       "http://www.w3.org/2000/svg",
-      "clipPath"
+      "clipPath",
     );
     ElementFactory.setAttributes(ele, attributes);
     ele.append(...childNodes);
@@ -245,7 +247,7 @@ export class ElementFactory {
   ): SVGLinearGradientElement {
     let ele = document.createElementNS(
       "http://www.w3.org/2000/svg",
-      "linearGradient"
+      "linearGradient",
     );
     ElementFactory.setAttributes(ele, attributes);
     ele.append(...childNodes);
@@ -268,7 +270,7 @@ export class ElementFactory {
 
   public stopRef(
     ref: Ref<SVGStopElement>,
-    attributes: ElementAttributeMap
+    attributes: ElementAttributeMap,
   ): SVGStopElement {
     return assign(ref, this.stop(attributes));
   }
@@ -291,7 +293,7 @@ export class ElementFactory {
 
   public useRef(
     ref: Ref<SVGUseElement>,
-    attributes: ElementAttributeMap
+    attributes: ElementAttributeMap,
   ): SVGUseElement {
     return assign(ref, this.use(attributes));
   }

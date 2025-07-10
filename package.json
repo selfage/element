@@ -1,6 +1,6 @@
 {
   "name": "@selfage/element",
-  "version": "3.5.2",
+  "version": "3.5.3",
   "description": "Create vanilla HTML elements/tags with visual structures.",
   "repository": {
     "type": "git",

@@ -42,6 +42,60 @@ export class ElementFactory {
     return assign(ref, this.text(content));
   }
 
+  public ol(
+    attributes: ElementAttributeMap,
+    ...childNodes: Array<Node>
+  ): HTMLOListElement {
+    let ele = document.createElement("ol");
+    ElementFactory.setAttributes(ele, attributes);
+    ele.append(...childNodes);
+    return ele;
+  }
+
+  public olRef(
+    ref: Ref<HTMLOListElement>,
+    attributes: ElementAttributeMap,
+    ...childNodes: Array<Node>
+  ): HTMLOListElement {
+    return assign(ref, this.ol(attributes, ...childNodes));
+  }
+
+  public ul(
+    attributes: ElementAttributeMap,
+    ...childNodes: Array<Node>
+  ): HTMLUListElement {
+    let ele = document.createElement("ul");
+    ElementFactory.setAttributes(ele, attributes);
+    ele.append(...childNodes);
+    return ele;
+  }
+
+  public ulRef(
+    ref: Ref<HTMLUListElement>,
+    attributes: ElementAttributeMap,
+    ...childNodes: Array<Node>
+  ): HTMLUListElement {
+    return assign(ref, this.ul(attributes, ...childNodes));
+  }
+
+  public li(
+    attributes: ElementAttributeMap,
+    ...childNodes: Array<Node>
+  ): HTMLLIElement {
+    let ele = document.createElement("li");
+    ElementFactory.setAttributes(ele, attributes);
+    ele.append(...childNodes);
+    return ele;
+  }
+
+  public liRef(
+    ref: Ref<HTMLLIElement>,
+    attributes: ElementAttributeMap,
+    ...childNodes: Array<Node>
+  ): HTMLLIElement {
+    return assign(ref, this.li(attributes, ...childNodes));
+  }
+
   public label(
     attributes: ElementAttributeMap,
     ...childNodes: Array<Node>

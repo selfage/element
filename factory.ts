@@ -34,6 +34,24 @@ export class ElementFactory {
     return assign(ref, this.div(attributes, ...childNodes));
   }
 
+  public span(
+    attributes: ElementAttributeMap,
+    ...childNodes: Array<Node>
+  ): HTMLSpanElement {
+    let ele = document.createElement("span");
+    ElementFactory.setAttributes(ele, attributes);
+    ele.append(...childNodes);
+    return ele;
+  }
+
+  public spanRef(
+    ref: Ref<HTMLSpanElement>,
+    attributes: ElementAttributeMap,
+    ...childNodes: Array<Node>
+  ): HTMLSpanElement {
+    return assign(ref, this.span(attributes, ...childNodes));
+  }
+
   public text(content = ""): Text {
     return document.createTextNode(content);
   }

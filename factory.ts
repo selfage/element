@@ -1,7 +1,7 @@
 import { Ref, assign } from "@selfage/ref";
 
 export interface ElementAttributeMap {
-  ref: Ref<Node>;
+  ref?: Ref<Node>;
   [name: string]: string | Ref<Node>;
 }
 

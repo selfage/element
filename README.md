@@ -47,14 +47,12 @@ let childDivA = new Ref<HTMLDivElement>();
 let childDivB = new Ref<HTMLDivElement>();
 let div = E.div(
   { class: "parent", style: "display: absolute;" },
-  E.divRef(
-    childDivA,
-    { class: "childA", style: "display: block; font-size: 24px;" },
+  E.div(
+    { ref: childDivA, class: "childA", style: "display: block; font-size: 24px;" },
     E.text("The first child")
   ),
-  E.divRef(
-    childDivB,
-    { class: "childB" },
+  E.div(
+    { ref: childDivB, class: "childB" },
     E.div(
       { class: "deepChildB", style: "font-size: 14px;" },
       E.text("The second deep child")
@@ -65,5 +63,3 @@ let div = E.div(
 childDivA.val.className; // childA
 childDivB.val.className; // childB
 ```
-
-Note the use of `E.divRef()` which can then take `childDivA` and `childDivB` as the first arguments.

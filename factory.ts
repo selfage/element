@@ -6,15 +6,16 @@ export interface ElementAttributeMap {
 }
 
 export class ElementFactory {
-  private static setAttributes(
+  private static applyAttributes(
     ele: Element,
     attributes: ElementAttributeMap,
   ): void {
     for (let [key, value] of Object.entries(attributes)) {
       if (key === "ref") {
-        continue;
-      }
-      if (value != null) {
+        if (value) {
+          assign(value as Ref<Node>, ele);
+        }
+      } else if (value != null) {
         ele.setAttribute(key, value as string);
       }
     }
@@ -22,10 +23,7 @@ export class ElementFactory {
 
   public meta(attributes: ElementAttributeMap): HTMLMetaElement {
     let ele = document.createElement("meta");
-    ElementFactory.setAttributes(ele, attributes);
-    if (attributes.ref) {
-      assign(attributes.ref, ele);
-    }
+    ElementFactory.applyAttributes(ele, attributes);
     return ele;
   }
 
@@ -34,11 +32,8 @@ export class ElementFactory {
     ...childNodes: Array<Node>
   ): HTMLScriptElement {
     let ele = document.createElement("script");
-    ElementFactory.setAttributes(ele, attributes);
+    ElementFactory.applyAttributes(ele, attributes);
     ele.append(...childNodes);
-    if (attributes.ref) {
-      assign(attributes.ref, ele);
-    }
     return ele;
   }
 
@@ -52,11 +47,8 @@ export class ElementFactory {
     ...childNodes: Array<Node>
   ): HTMLHeadingElement {
     let ele = document.createElement("h1");
-    ElementFactory.setAttributes(ele, attributes);
+    ElementFactory.applyAttributes(ele, attributes);
     ele.append(...childNodes);
-    if (attributes.ref) {
-      assign(attributes.ref, ele);
-    }
     return ele;
   }
 
@@ -65,11 +57,8 @@ export class ElementFactory {
     ...childNodes: Array<Node>
   ): HTMLHeadingElement {
     let ele = document.createElement("h2");
-    ElementFactory.setAttributes(ele, attributes);
+    ElementFactory.applyAttributes(ele, attributes);
     ele.append(...childNodes);
-    if (attributes.ref) {
-      assign(attributes.ref, ele);
-    }
     return ele;
   }
 
@@ -78,11 +67,8 @@ export class ElementFactory {
     ...childNodes: Array<Node>
   ): HTMLHeadingElement {
     let ele = document.createElement("h3");
-    ElementFactory.setAttributes(ele, attributes);
+    ElementFactory.applyAttributes(ele, attributes);
     ele.append(...childNodes);
-    if (attributes.ref) {
-      assign(attributes.ref, ele);
-    }
     return ele;
   }
 
@@ -91,11 +77,8 @@ export class ElementFactory {
     ...childNodes: Array<Node>
   ): HTMLHeadingElement {
     let ele = document.createElement("h4");
-    ElementFactory.setAttributes(ele, attributes);
+    ElementFactory.applyAttributes(ele, attributes);
     ele.append(...childNodes);
-    if (attributes.ref) {
-      assign(attributes.ref, ele);
-    }
     return ele;
   }
 
@@ -104,11 +87,8 @@ export class ElementFactory {
     ...childNodes: Array<Node>
   ): HTMLHeadingElement {
     let ele = document.createElement("h5");
-    ElementFactory.setAttributes(ele, attributes);
+    ElementFactory.applyAttributes(ele, attributes);
     ele.append(...childNodes);
-    if (attributes.ref) {
-      assign(attributes.ref, ele);
-    }
     return ele;
   }
 
@@ -117,11 +97,8 @@ export class ElementFactory {
     ...childNodes: Array<Node>
   ): HTMLHeadingElement {
     let ele = document.createElement("h6");
-    ElementFactory.setAttributes(ele, attributes);
+    ElementFactory.applyAttributes(ele, attributes);
     ele.append(...childNodes);
-    if (attributes.ref) {
-      assign(attributes.ref, ele);
-    }
     return ele;
   }
 
@@ -130,20 +107,14 @@ export class ElementFactory {
     ...childNodes: Array<Node>
   ): HTMLParagraphElement {
     let ele = document.createElement("p");
-    ElementFactory.setAttributes(ele, attributes);
+    ElementFactory.applyAttributes(ele, attributes);
     ele.append(...childNodes);
-    if (attributes.ref) {
-      assign(attributes.ref, ele);
-    }
     return ele;
   }
 
   public br(attributes: ElementAttributeMap): HTMLBRElement {
     let ele = document.createElement("br");
-    ElementFactory.setAttributes(ele, attributes);
-    if (attributes.ref) {
-      assign(attributes.ref, ele);
-    }
+    ElementFactory.applyAttributes(ele, attributes);
     return ele;
   }
 
@@ -152,11 +123,8 @@ export class ElementFactory {
     ...childNodes: Array<Node>
   ): HTMLDivElement {
     let ele = document.createElement("div");
-    ElementFactory.setAttributes(ele, attributes);
+    ElementFactory.applyAttributes(ele, attributes);
     ele.append(...childNodes);
-    if (attributes.ref) {
-      assign(attributes.ref, ele);
-    }
     return ele;
   }
 
@@ -165,11 +133,8 @@ export class ElementFactory {
     ...childNodes: Array<Node>
   ): HTMLSpanElement {
     let ele = document.createElement("span");
-    ElementFactory.setAttributes(ele, attributes);
+    ElementFactory.applyAttributes(ele, attributes);
     ele.append(...childNodes);
-    if (attributes.ref) {
-      assign(attributes.ref, ele);
-    }
     return ele;
   }
 
@@ -178,11 +143,8 @@ export class ElementFactory {
     ...childNodes: Array<Node>
   ): HTMLOListElement {
     let ele = document.createElement("ol");
-    ElementFactory.setAttributes(ele, attributes);
+    ElementFactory.applyAttributes(ele, attributes);
     ele.append(...childNodes);
-    if (attributes.ref) {
-      assign(attributes.ref, ele);
-    }
     return ele;
   }
 
@@ -191,11 +153,8 @@ export class ElementFactory {
     ...childNodes: Array<Node>
   ): HTMLUListElement {
     let ele = document.createElement("ul");
-    ElementFactory.setAttributes(ele, attributes);
+    ElementFactory.applyAttributes(ele, attributes);
     ele.append(...childNodes);
-    if (attributes.ref) {
-      assign(attributes.ref, ele);
-    }
     return ele;
   }
 
@@ -204,11 +163,8 @@ export class ElementFactory {
     ...childNodes: Array<Node>
   ): HTMLLIElement {
     let ele = document.createElement("li");
-    ElementFactory.setAttributes(ele, attributes);
+    ElementFactory.applyAttributes(ele, attributes);
     ele.append(...childNodes);
-    if (attributes.ref) {
-      assign(attributes.ref, ele);
-    }
     return ele;
   }
 
@@ -217,20 +173,14 @@ export class ElementFactory {
     ...childNodes: Array<Node>
   ): HTMLLabelElement {
     let ele = document.createElement("label");
-    ElementFactory.setAttributes(ele, attributes);
+    ElementFactory.applyAttributes(ele, attributes);
     ele.append(...childNodes);
-    if (attributes.ref) {
-      assign(attributes.ref, ele);
-    }
     return ele;
   }
 
   public image(attributes: ElementAttributeMap): HTMLImageElement {
     let ele = document.createElement("img");
-    ElementFactory.setAttributes(ele, attributes);
-    if (attributes.ref) {
-      assign(attributes.ref, ele);
-    }
+    ElementFactory.applyAttributes(ele, attributes);
     return ele;
   }
 
@@ -239,20 +189,14 @@ export class ElementFactory {
     ...childNodes: Array<Node>
   ): HTMLFormElement {
     let ele = document.createElement("form");
-    ElementFactory.setAttributes(ele, attributes);
+    ElementFactory.applyAttributes(ele, attributes);
     ele.append(...childNodes);
-    if (attributes.ref) {
-      assign(attributes.ref, ele);
-    }
     return ele;
   }
 
   public input(attributes: ElementAttributeMap): HTMLInputElement {
     let ele = document.createElement("input");
-    ElementFactory.setAttributes(ele, attributes);
-    if (attributes.ref) {
-      assign(attributes.ref, ele);
-    }
+    ElementFactory.applyAttributes(ele, attributes);
     return ele;
   }
 
@@ -261,11 +205,8 @@ export class ElementFactory {
     ...childNodes: Array<Node>
   ): HTMLTextAreaElement {
     let ele = document.createElement("textarea");
-    ElementFactory.setAttributes(ele, attributes);
+    ElementFactory.applyAttributes(ele, attributes);
     ele.append(...childNodes);
-    if (attributes.ref) {
-      assign(attributes.ref, ele);
-    }
     return ele;
   }
 
@@ -274,11 +215,8 @@ export class ElementFactory {
     ...childNodes: Array<Node>
   ): HTMLButtonElement {
     let ele = document.createElement("button");
-    ElementFactory.setAttributes(ele, attributes);
+    ElementFactory.applyAttributes(ele, attributes);
     ele.append(...childNodes);
-    if (attributes.ref) {
-      assign(attributes.ref, ele);
-    }
     return ele;
   }
 
@@ -287,38 +225,26 @@ export class ElementFactory {
     ...childNodes: Array<Node>
   ): HTMLAnchorElement {
     let ele = document.createElement("a");
-    ElementFactory.setAttributes(ele, attributes);
+    ElementFactory.applyAttributes(ele, attributes);
     ele.append(...childNodes);
-    if (attributes.ref) {
-      assign(attributes.ref, ele);
-    }
     return ele;
   }
 
   public iframe(attributes: ElementAttributeMap): HTMLIFrameElement {
     let ele = document.createElement("iframe");
-    ElementFactory.setAttributes(ele, attributes);
-    if (attributes.ref) {
-      assign(attributes.ref, ele);
-    }
+    ElementFactory.applyAttributes(ele, attributes);
     return ele;
   }
 
   public video(attributes: ElementAttributeMap): HTMLVideoElement {
     let ele = document.createElement("video");
-    ElementFactory.setAttributes(ele, attributes);
-    if (attributes.ref) {
-      assign(attributes.ref, ele);
-    }
+    ElementFactory.applyAttributes(ele, attributes);
     return ele;
   }
 
   public canvas(attributes: ElementAttributeMap): HTMLCanvasElement {
     let ele = document.createElement("canvas");
-    ElementFactory.setAttributes(ele, attributes);
-    if (attributes.ref) {
-      assign(attributes.ref, ele);
-    }
+    ElementFactory.applyAttributes(ele, attributes);
     return ele;
   }
 
@@ -327,65 +253,44 @@ export class ElementFactory {
     ...childNodes: Array<SVGElement>
   ): SVGSVGElement {
     let ele = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-    ElementFactory.setAttributes(ele, attributes);
+    ElementFactory.applyAttributes(ele, attributes);
     ele.append(...childNodes);
-    if (attributes.ref) {
-      assign(attributes.ref, ele);
-    }
     return ele;
   }
 
   public path(attributes: ElementAttributeMap): SVGPathElement {
     let ele = document.createElementNS("http://www.w3.org/2000/svg", "path");
-    ElementFactory.setAttributes(ele, attributes);
-    if (attributes.ref) {
-      assign(attributes.ref, ele);
-    }
+    ElementFactory.applyAttributes(ele, attributes);
     return ele;
   }
 
   public circle(attributes: ElementAttributeMap): SVGCircleElement {
     let ele = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-    ElementFactory.setAttributes(ele, attributes);
-    if (attributes.ref) {
-      assign(attributes.ref, ele);
-    }
+    ElementFactory.applyAttributes(ele, attributes);
     return ele;
   }
 
   public ellipse(attributes: ElementAttributeMap): SVGEllipseElement {
     let ele = document.createElementNS("http://www.w3.org/2000/svg", "ellipse");
-    ElementFactory.setAttributes(ele, attributes);
-    if (attributes.ref) {
-      assign(attributes.ref, ele);
-    }
+    ElementFactory.applyAttributes(ele, attributes);
     return ele;
   }
 
   public rect(attributes: ElementAttributeMap): SVGRectElement {
     let ele = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-    ElementFactory.setAttributes(ele, attributes);
-    if (attributes.ref) {
-      assign(attributes.ref, ele);
-    }
+    ElementFactory.applyAttributes(ele, attributes);
     return ele;
   }
 
   public line(attributes: ElementAttributeMap): SVGLineElement {
     let ele = document.createElementNS("http://www.w3.org/2000/svg", "line");
-    ElementFactory.setAttributes(ele, attributes);
-    if (attributes.ref) {
-      assign(attributes.ref, ele);
-    }
+    ElementFactory.applyAttributes(ele, attributes);
     return ele;
   }
 
   public polygon(attributes: ElementAttributeMap): SVGPolygonElement {
     let ele = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
-    ElementFactory.setAttributes(ele, attributes);
-    if (attributes.ref) {
-      assign(attributes.ref, ele);
-    }
+    ElementFactory.applyAttributes(ele, attributes);
     return ele;
   }
 
@@ -394,10 +299,7 @@ export class ElementFactory {
       "http://www.w3.org/2000/svg",
       "polyline",
     );
-    ElementFactory.setAttributes(ele, attributes);
-    if (attributes.ref) {
-      assign(attributes.ref, ele);
-    }
+    ElementFactory.applyAttributes(ele, attributes);
     return ele;
   }
 
@@ -406,11 +308,8 @@ export class ElementFactory {
     ...childNodes: Array<SVGElement>
   ): SVGGElement {
     let ele = document.createElementNS("http://www.w3.org/2000/svg", "g");
-    ElementFactory.setAttributes(ele, attributes);
+    ElementFactory.applyAttributes(ele, attributes);
     ele.append(...childNodes);
-    if (attributes.ref) {
-      assign(attributes.ref, ele);
-    }
     return ele;
   }
 
@@ -422,11 +321,8 @@ export class ElementFactory {
       "http://www.w3.org/2000/svg",
       "clipPath",
     );
-    ElementFactory.setAttributes(ele, attributes);
+    ElementFactory.applyAttributes(ele, attributes);
     ele.append(...childNodes);
-    if (attributes.ref) {
-      assign(attributes.ref, ele);
-    }
     return ele;
   }
 
@@ -438,11 +334,8 @@ export class ElementFactory {
       "http://www.w3.org/2000/svg",
       "linearGradient",
     );
-    ElementFactory.setAttributes(ele, attributes);
+    ElementFactory.applyAttributes(ele, attributes);
     ele.append(...childNodes);
-    if (attributes.ref) {
-      assign(attributes.ref, ele);
-    }
     return ele;
   }
 
@@ -454,20 +347,14 @@ export class ElementFactory {
       "http://www.w3.org/2000/svg",
       "radialGradient",
     );
-    ElementFactory.setAttributes(ele, attributes);
+    ElementFactory.applyAttributes(ele, attributes);
     ele.append(...childNodes);
-    if (attributes.ref) {
-      assign(attributes.ref, ele);
-    }
     return ele;
   }
 
   public stop(attributes: ElementAttributeMap): SVGStopElement {
     let ele = document.createElementNS("http://www.w3.org/2000/svg", "stop");
-    ElementFactory.setAttributes(ele, attributes);
-    if (attributes.ref) {
-      assign(attributes.ref, ele);
-    }
+    ElementFactory.applyAttributes(ele, attributes);
     return ele;
   }
 
@@ -476,20 +363,14 @@ export class ElementFactory {
     ...childNodes: Array<SVGElement>
   ): SVGDefsElement {
     let ele = document.createElementNS("http://www.w3.org/2000/svg", "defs");
-    ElementFactory.setAttributes(ele, attributes);
+    ElementFactory.applyAttributes(ele, attributes);
     ele.append(...childNodes);
-    if (attributes.ref) {
-      assign(attributes.ref, ele);
-    }
     return ele;
   }
 
   public use(attributes: ElementAttributeMap): SVGUseElement {
     let ele = document.createElementNS("http://www.w3.org/2000/svg", "use");
-    ElementFactory.setAttributes(ele, attributes);
-    if (attributes.ref) {
-      assign(attributes.ref, ele);
-    }
+    ElementFactory.applyAttributes(ele, attributes);
     return ele;
   }
 
@@ -498,11 +379,8 @@ export class ElementFactory {
     ...childNodes: Array<Node>
   ): HTMLElement {
     let ele = document.createElement("header");
-    ElementFactory.setAttributes(ele, attributes);
+    ElementFactory.applyAttributes(ele, attributes);
     ele.append(...childNodes);
-    if (attributes.ref) {
-      assign(attributes.ref, ele);
-    }
     return ele;
   }
 
@@ -511,11 +389,8 @@ export class ElementFactory {
     ...childNodes: Array<Node>
   ): HTMLElement {
     let ele = document.createElement("footer");
-    ElementFactory.setAttributes(ele, attributes);
+    ElementFactory.applyAttributes(ele, attributes);
     ele.append(...childNodes);
-    if (attributes.ref) {
-      assign(attributes.ref, ele);
-    }
     return ele;
   }
 
@@ -524,11 +399,8 @@ export class ElementFactory {
     ...childNodes: Array<Node>
   ): HTMLElement {
     let ele = document.createElement("nav");
-    ElementFactory.setAttributes(ele, attributes);
+    ElementFactory.applyAttributes(ele, attributes);
     ele.append(...childNodes);
-    if (attributes.ref) {
-      assign(attributes.ref, ele);
-    }
     return ele;
   }
 
@@ -537,11 +409,8 @@ export class ElementFactory {
     ...childNodes: Array<Node>
   ): HTMLElement {
     let ele = document.createElement("main");
-    ElementFactory.setAttributes(ele, attributes);
+    ElementFactory.applyAttributes(ele, attributes);
     ele.append(...childNodes);
-    if (attributes.ref) {
-      assign(attributes.ref, ele);
-    }
     return ele;
   }
 
@@ -550,11 +419,8 @@ export class ElementFactory {
     ...childNodes: Array<Node>
   ): HTMLElement {
     let ele = document.createElement("section");
-    ElementFactory.setAttributes(ele, attributes);
+    ElementFactory.applyAttributes(ele, attributes);
     ele.append(...childNodes);
-    if (attributes.ref) {
-      assign(attributes.ref, ele);
-    }
     return ele;
   }
 
@@ -563,11 +429,8 @@ export class ElementFactory {
     ...childNodes: Array<Node>
   ): HTMLElement {
     let ele = document.createElement("article");
-    ElementFactory.setAttributes(ele, attributes);
+    ElementFactory.applyAttributes(ele, attributes);
     ele.append(...childNodes);
-    if (attributes.ref) {
-      assign(attributes.ref, ele);
-    }
     return ele;
   }
 }

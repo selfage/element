@@ -258,6 +258,26 @@ export class ElementFactory {
     return ele;
   }
 
+  public svgTitle(
+    attributes: ElementAttributeMap,
+    ...childNodes: Array<Node>
+  ): SVGTitleElement {
+    let ele = document.createElementNS("http://www.w3.org/2000/svg", "title");
+    ElementFactory.applyAttributes(ele, attributes);
+    ele.append(...childNodes);
+    return ele;
+  }
+
+  public svgDesc(
+    attributes: ElementAttributeMap,
+    ...childNodes: Array<Node>
+  ): SVGDescElement {
+    let ele = document.createElementNS("http://www.w3.org/2000/svg", "desc");
+    ElementFactory.applyAttributes(ele, attributes);
+    ele.append(...childNodes);
+    return ele;
+  }
+
   public path(attributes: ElementAttributeMap): SVGPathElement {
     let ele = document.createElementNS("http://www.w3.org/2000/svg", "path");
     ElementFactory.applyAttributes(ele, attributes);
